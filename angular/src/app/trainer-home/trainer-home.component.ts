@@ -30,7 +30,7 @@ export class TrainerHomeComponent implements OnInit {
     );
   }
 
-  handleBookingStatus(id: number, accept_status: boolean) {
+  handleBookingStatus(id: number, accept_status: boolean): void {
     this.bookingStatusService.addBookingsStatus({
       id,
       is_accepted: accept_status,
