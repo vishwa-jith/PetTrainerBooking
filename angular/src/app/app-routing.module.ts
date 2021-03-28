@@ -6,7 +6,6 @@ import { TrainerHomeComponent } from './trainer-home/trainer-home.component';
 import { TrainerReportComponent } from './trainer-report/trainer-report.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { UserReportComponent } from './user-report/user-report.component';
-import { AppointmentComponent } from './appointment/appointment.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -33,12 +32,6 @@ const routes: Routes = [
   {
     path: 'report',
     component: UserReportComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'appointment',
-    component: AppointmentComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },
