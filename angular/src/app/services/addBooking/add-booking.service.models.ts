@@ -1,4 +1,4 @@
-export interface AddAppointment {
+export interface AddBooking {
   id: number;
   date: string;
   time: string;
