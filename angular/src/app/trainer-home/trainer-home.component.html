@@ -1,1 +1,62 @@
-<p>trainer-home works!</p>
+<div class="container">
+  <div class="d-flex justify-content-end my-3">
+    <button
+      class="btn btn-info text-light"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Appointment List
+    </button>
+  </div>
+  <div class="row">
+    <div
+      class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-center"
+      *ngFor="let booking of bookings"
+    >
+      <div class="our-team">
+        <div class="picture">
+          <img
+            class="img-fluid"
+            src="https://picsum.photos/130/130?image=1027"
+          />
+        </div>
+        <div class="team-content">
+          <h3 class="name">{{ booking.user_name }}</h3>
+          <h4 class="title">{{ booking.date }}</h4>
+          <h4 class="title">{{ booking.time }}</h4>
+        </div>
+        <ul class="social"></ul>
+      </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="d-flex justify-content-between align-items-self">
+              <h1 class="modal-title">Appointment List</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div *ngFor="let booking of bookings">
+              <div class="list-item">
+                <div class="picture">
+                  <img
+                    class="img-fluid"
+                    src="https://picsum.photos/130/130?image=1027"
+                  />
+                </div>
+                <h3 class="name">{{ booking.user_name }}</h3>
+                <h4 class="title">{{ booking.date }}</h4>
+                <h4 class="title">{{ booking.time }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
