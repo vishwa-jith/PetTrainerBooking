@@ -14,6 +14,7 @@ import { AppointmentComponent } from './appointment/appointment.component';
 import { AuthGuard } from './auth.guard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     UserReportComponent,
     TrainerReportComponent,
     AppointmentComponent,
+    AdminHomeComponent,
   ],
   imports: [
     BrowserModule,
