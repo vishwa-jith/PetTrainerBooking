@@ -1,23 +1,23 @@
 <div class="container">
   <div class="row">
     <div [attr.class]="trainerId ? 'col-8' : 'col-12'">
-      <table class="table table-hover table-bordered my-5 bg-light">
-        <thead class="text-secondary">
+      <table>
+        <thead>
           <tr>
             <th scope="col">Booking Id</th>
             <th scope="col">Trainer</th>
             <th scope="col">Date</th>
           </tr>
         </thead>
-        <tbody *ngFor="let appointment of appointments" class="text-secondary">
+        <tbody *ngFor="let appointment of appointments">
           <tr
             (click)="handleTrainerId(appointment.id)"
             [attr.class]="
-              trainerId && trainerId == appointment.id && 'table-active'
+              trainerId && trainerId == appointment.id && 'bg-light'
             "
             style="cursor: pointer"
           >
-            <th scope="row">{{ appointment.booking_id }}</th>
+            <td scope="row">{{ appointment.booking_id }}</td>
             <td>{{ appointment.trainer_name }}</td>
             <td>{{ appointment.date }}</td>
           </tr>
