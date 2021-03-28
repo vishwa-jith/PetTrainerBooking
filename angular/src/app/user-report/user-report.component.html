@@ -1,1 +1,47 @@
-<p>user-report works!</p>
+<div class="container">
+  <div class="row">
+    <div [attr.class]="trainerId ? 'col-8' : 'col-12'">
+      <table class="table table-hover table-bordered my-3">
+        <thead class="text-secondary">
+          <tr>
+            <th scope="col">Booking Id</th>
+            <th scope="col">Trainer</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let appointment of appointments" class="text-secondary">
+          <tr
+            (click)="handleTrainerId(appointment.id)"
+            [attr.class]="
+              trainerId && trainerId == appointment.id && 'table-active'
+            "
+            style="cursor: pointer"
+          >
+            <th scope="row">{{ appointment.booking_id }}</th>
+            <td>{{ appointment.trainer_name }}</td>
+            <td>{{ appointment.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div [attr.class]="trainerId ? 'col-4' : 'd-none'">
+      <div class="our-team">
+        <h2 class="text-center">Shop Name</h2>
+        <div class="d-flex justify-content-between">
+          <p>MR. XYZ</p>
+          <p>10/03/2021</p>
+        </div>
+        <div class="d-flex justify-content-between">
+          <p>Days 10</p>
+          <p>Total 12,000</p>
+        </div>
+        <div class="d-flex justify-content-end">
+          <h2>Signature</h2>
+        </div>
+        <div class="d-flex justify-content-end">
+          <p>Digitally verified</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

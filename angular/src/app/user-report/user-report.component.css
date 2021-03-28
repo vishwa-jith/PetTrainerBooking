@@ -1,0 +1,10 @@
+.our-team {
+  padding: 20px 30px;
+  margin: 20px 0px;
+  background-color: #f7f5ec;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border-radius: 15px;
+}

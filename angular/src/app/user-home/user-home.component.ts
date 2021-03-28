@@ -21,13 +21,13 @@ export class UserHomeComponent implements OnInit {
 
   addBookingForm = this.fb.group({ date: [''], time: [''] });
 
-  onSubmit() {
+  onSubmit(): void {
     this.addBookingService.addBookings({
       id: this.trainerId,
       ...this.addBookingForm.value,
     });
   }
-  handleTrainerId(id: number) {
+  handleTrainerId(id: number): void {
     this.trainerId = id;
   }
 

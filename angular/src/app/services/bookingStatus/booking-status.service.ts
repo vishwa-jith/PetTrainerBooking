@@ -7,7 +7,7 @@ import { BookingStatus } from './booking-status.service.model';
 export class BookingStatusService {
   constructor() {}
 
-  addBookingsStatus(bookingStatus: BookingStatus) {
+  addBookingsStatus(bookingStatus: BookingStatus): void {
     console.log(bookingStatus);
   }
 }
