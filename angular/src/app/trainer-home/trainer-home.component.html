@@ -17,7 +17,7 @@
         <div class="picture">
           <img
             class="img-fluid"
-            src="https://picsum.photos/130/130?image=1027"
+            src="https://icons-for-free.com/iconfiles/png/512/avatar+human+male+man+men+people+person+profile+user+users-1320196163635839021.png"
           />
         </div>
         <div class="team-content">
@@ -46,12 +46,23 @@
                 <div class="picture">
                   <img
                     class="img-fluid"
-                    src="https://picsum.photos/130/130?image=1027"
+                    src="https://icons-for-free.com/iconfiles/png/512/avatar+human+male+man+men+people+person+profile+user+users-1320196163635839021.png"
                   />
                 </div>
-                <h3 class="name">{{ booking.user_name }}</h3>
-                <h4 class="title">{{ booking.date }}</h4>
-                <h4 class="title">{{ booking.time }}</h4>
+                <h3 style="margin-bottom: 0px">{{ booking.user_name }}</h3>
+                <h4 style="margin-bottom: 0px">{{ booking.date }}</h4>
+                <h4 style="margin-bottom: 0px">{{ booking.time }}</h4>
+                <button
+                  class="btn btn-outline-success"
+                  (click)="handleBookingStatus(booking.id, true)"
+                >
+                  <fa-icon [icon]="faCheck"></fa-icon></button
+                ><button
+                  class="btn btn-outline-danger"
+                  (click)="handleBookingStatus(booking.id, false)"
+                >
+                  <fa-icon [icon]="faTimes"></fa-icon>
+                </button>
               </div>
             </div>
           </div>
