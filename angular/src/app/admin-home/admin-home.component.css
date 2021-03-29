@@ -1,54 +1,47 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+.jumbotron {
+  margin-top: 40px;
+  height: 75px;
 }
-.jumbotron{
-    margin-top:80px;
-    height: 75px;
-    
+.jumbotron .btn {
+  width: 100px;
 }
-.jumbotron .btn{
-    width: 100px;
-}
-body{
-    height: 100vh;
-}
-.input-group .btn{
-      width: 100%;
-  }
-input{
-    margin-bottom: 20px;
-}
+
 tr {
-    width: 100%;
-    height:70px; 
- }
-.row{
-    display: block;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 8px 8px 16px grey;
-    height:420px;
+  width: 100%;
 }
-.table{
-    margin: auto;
-    width: 100% !important;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 5px 5px 10px grey;
+td,
+th {
+  height: 70px;
+  vertical-align: middle;
+  text-align: justify;
 }
-.btn{
-    border:none;
-    outline: none;
-    width: 75%;
-    color:#fff;
-    background-color: #000 ;
-    border-radius: 4px;
-    font-weight: bold;
+.paper {
+  display: block;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 2px 2px 10px grey;
+  height: 420px;
+  background-color: #eee;
 }
-.btn:hover{
-    background: #fff;
-    border:1px solid;
-    color:#000;
+.group-content {
+  margin: auto;
+  width: 100% !important;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 2px 2px 10px grey;
+  padding: 10px;
+}
+.btn-tool {
+  border: none;
+  outline: none;
+  width: 75%;
+  color: #fff;
+  background-color: #000;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.btn-tool:hover {
+  background: #fff;
+  border: 1px solid;
+  color: #000;
 }
