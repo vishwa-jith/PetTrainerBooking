@@ -86,6 +86,17 @@ public class User {
     public User() {
     }
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String email, String password, String username, String mobileNumber) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.mobileNumber = mobileNumber;
+    }
     @Override
     public String toString() {
         return "User [active=" + active + ", email=" + email + ", experience=" + experience + ", id=" + id
