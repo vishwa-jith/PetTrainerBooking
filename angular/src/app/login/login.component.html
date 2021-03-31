@@ -19,7 +19,12 @@
                 placeholder="Enter email"
                 class="form-control my-3 p-2"
                 formControlName="email"
+                [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }"
               />
+              <div *ngIf=" f.email.touched && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+                <div *ngIf="f.email.errors.email">Email must be valid</div>
+              </div>
             </div>
           </div>
           <div class="form-row d-flex justify-content-center">
@@ -29,7 +34,11 @@
                 placeholder="Enter password"
                 class="form-control my-3 p-2"
                 formControlName="password"
+                [ngClass]="{'is-invalid':f.password.touched && f.password.errors}"
               />
+              <div *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
             </div>
           </div>
           <div class="form-row d-flex justify-content-center">
