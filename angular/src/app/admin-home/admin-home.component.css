@@ -1,0 +1,47 @@
+.jumbotron {
+  margin-top: 40px;
+  height: 75px;
+}
+.jumbotron .btn {
+  width: 100px;
+}
+
+tr {
+  width: 100%;
+}
+td,
+th {
+  height: 70px;
+  vertical-align: middle;
+  text-align: justify;
+}
+.paper {
+  display: block;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 2px 2px 10px grey;
+  height: 420px;
+  background-color: #eee;
+}
+.group-content {
+  margin: auto;
+  width: 100% !important;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 2px 2px 10px grey;
+  padding: 10px;
+}
+.btn-tool {
+  border: none;
+  outline: none;
+  width: 75%;
+  color: #fff;
+  background-color: #000;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.btn-tool:hover {
+  background: #fff;
+  border: 1px solid;
+  color: #000;
+}

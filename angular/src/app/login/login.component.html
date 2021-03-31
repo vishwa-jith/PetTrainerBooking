@@ -1,31 +1,49 @@
 <section class="Form">
-    <div class="container">
-        <div class="row no-gutters">
-            <div class="col-lg-6 text-center">
-                <img src="./vt.jpg" class="img-fluid" alt="">
+  <div class="container">
+    <div class="row no-gutters" style="height: 100%">
+      <div class="col-lg-6 text-center p-0">
+        <img
+          src="https://images.indianexpress.com/2021/01/Golden-Retriever-dog.jpg"
+          class="img-fluid"
+          alt=""
+          style="width: 100%; height: 100%"
+        />
+      </div>
+      <div class="col-lg-6 pt-5">
+        <h2 class="font-weight-bold py-3 text-center">Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-row d-flex justify-content-center">
+            <div class="col-9">
+              <input
+                type="email"
+                placeholder="Enter email"
+                class="form-control my-3 p-2"
+                formControlName="email"
+              />
             </div>
-            <div class="col-lg-6 px-7 pt-5">
-                <h2 class="font-weight-bold py-3">Login</h2>
-                <form>
-                    <div class="form-row">
-                        <div class="col-lg-9">
-                            <input type="email" placeholder="Enter email" class="form-control my-3 p-2 ">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                            <div class="col-lg-9">
-                                <input type="password" placeholder="Enter password" class="form-control my-3 p-2">
-                            </div>
-                    </div>
-                    <div class="form-row">
-                            <div class="col-lg-9">
-                                <button type="submit" class="btn mt-3 mb-5">Login</button>
-                            </div>
-                    </div>   
-                    <a href="#">Forgot Password</a>
-                    <p>Don't have an account? <a href="#">Register Here</a></p>
-                </form>
+          </div>
+          <div class="form-row d-flex justify-content-center">
+            <div class="col-9">
+              <input
+                type="password"
+                placeholder="Enter password"
+                class="form-control my-3 p-2"
+                formControlName="password"
+              />
             </div>
-        </div>
+          </div>
+          <div class="form-row d-flex justify-content-center">
+            <div class="col-9">
+              <button type="submit" class="btn mt-3 mb-5">Login</button>
+            </div>
+          </div>
+          <div class="mb-5 text-center">
+            <h3>
+              Don't have an account? <a routerLink="/signup">Register Here</a>
+            </h3>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </section>
