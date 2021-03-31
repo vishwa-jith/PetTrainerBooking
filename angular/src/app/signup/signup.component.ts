@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class SignupComponent implements OnInit {
   signupForm:any;
+  
   submitted=false;
   
   constructor(private fb: FormBuilder, private authService: AuthService) {}
