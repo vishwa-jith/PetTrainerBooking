@@ -1,7 +1,7 @@
 package com.example.Dao;
 
 public class User {
-    private int id;
+    private String id;
     private String email;
     private String password;
     private String username;
@@ -11,11 +11,11 @@ public class User {
     private String shopName;
     private int experience;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -38,7 +38,8 @@ public class User {
     public String getUsername() {
         return username;
     }
-  public void setUsername(String username) {
+
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -96,7 +97,6 @@ public class User {
         this.username = username;
         this.mobileNumber = mobileNumber;
     }
-
     @Override
     public String toString() {
         return "User [active=" + active + ", email=" + email + ", experience=" + experience + ", id=" + id
