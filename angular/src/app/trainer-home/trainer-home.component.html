@@ -11,7 +11,7 @@
   <div class="row">
     <div
       class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-center"
-      *ngFor="let booking of acceptedBookings"
+      *ngFor="let booking of acceptedBooking"
     >
       <div class="our-team" style="min-width: 250px">
         <div class="picture">
@@ -21,9 +21,9 @@
           />
         </div>
         <div class="team-content">
-          <h3 class="name">{{ booking.user_name }}</h3>
-          <h4 class="title">{{ booking.date }}</h4>
-          <h4 class="title">{{ booking.time }}</h4>
+          <h3 class="name">{{ booking.lawFirmName }}</h3>
+          <h4 class="title">{{ booking.date | date }}</h4>
+          <h4 class="title">{{ booking.date | date: "shortTime" }}</h4>
         </div>
         <ul class="social"></ul>
       </div>
@@ -41,7 +41,7 @@
                 aria-label="Close"
               ></button>
             </div>
-            <div *ngFor="let booking of nonAcceptedBookings">
+            <div *ngFor="let booking of nonAcceptedBooking">
               <div class="list-item">
                 <div class="picture">
                   <img
@@ -49,17 +49,21 @@
                     src="https://icons-for-free.com/iconfiles/png/512/avatar+human+male+man+men+people+person+profile+user+users-1320196163635839021.png"
                   />
                 </div>
-                <h3 style="margin-bottom: 0px">{{ booking.user_name }}</h3>
-                <h4 style="margin-bottom: 0px">{{ booking.date }}</h4>
-                <h4 style="margin-bottom: 0px">{{ booking.time }}</h4>
+                <h3 style="margin-bottom: 0px">{{ booking.lawFirmName }}</h3>
+                <h4 style="margin-bottom: 0px">
+                  {{ booking.date | date: "shortDate" }}
+                </h4>
+                <h4 style="margin-bottom: 0px">
+                  {{ booking.date | date: "shortTime" }}
+                </h4>
                 <button
                   class="btn btn-outline-success"
-                  (click)="handleBookingStatus(booking.id, true)"
+                  (click)="handleBookingStatus(booking.id, 'accepted')"
                 >
                   <fa-icon [icon]="faCheck"></fa-icon></button
                 ><button
                   class="btn btn-outline-danger"
-                  (click)="handleBookingStatus(booking.id, false)"
+                  (click)="handleBookingStatus(booking.id, 'rejected')"
                 >
                   <fa-icon [icon]="faTimes"></fa-icon>
                 </button>

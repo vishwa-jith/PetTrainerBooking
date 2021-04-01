@@ -18,9 +18,9 @@
           />
         </div>
         <div class="team-content">
-          <h3 class="name">{{ booking.user_name }}</h3>
-          <h4 class="title">{{ booking.date }}</h4>
-          <h4 class="title">{{ booking.time }}</h4>
+          <h3 class="name">{{ booking.lawFirmName }}</h3>
+          <h4 class="title">{{ booking.date | date }}</h4>
+          <h4 class="title">{{ booking.date | date: "shortTime" }}</h4>
         </div>
         <ul class="social"></ul>
       </div>
@@ -50,7 +50,7 @@
                     </div>
                   </div>
                   <p *ngIf="selectedBooking" style="margin-bottom: 0px">
-                    {{ selectedBooking.user_name }}
+                    {{ selectedBooking.lawFirmName }}
                   </p>
                 </div>
                 <div
@@ -62,7 +62,7 @@
                     class="text-info"
                   ></fa-icon>
                   <p *ngIf="selectedBooking" style="margin-bottom: 0px">
-                    {{ selectedBooking.date }}
+                    {{ selectedBooking.date | date }}
                   </p>
                 </div>
               </div>
@@ -77,7 +77,7 @@
                       class="text-info"
                     ></fa-icon>
                     <p *ngIf="selectedBooking" style="margin-bottom: 0px">
-                      {{ selectedBooking.time }}
+                      {{ selectedBooking.date | date: "mediumTime" }}
                     </p>
                   </div>
                 </div>

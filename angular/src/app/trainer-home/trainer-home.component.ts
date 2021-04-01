@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-
-import { BookingsService } from '../services/bookings/bookings.service';
 import { Booking } from '../services/bookings/booking.service.model';
+import { BookingsService } from '../services/bookings/bookings.service';
 import { BookingStatusService } from '../services/bookingStatus/booking-status.service';
 
 @Component({
@@ -11,9 +10,9 @@ import { BookingStatusService } from '../services/bookingStatus/booking-status.s
   styleUrls: ['./trainer-home.component.css'],
 })
 export class TrainerHomeComponent implements OnInit {
-  bookings;
-  acceptedBookings: Booking[];
-  nonAcceptedBookings: Booking[];
+  bookings: Booking[] = [];
+  acceptedBooking: Booking[] = [];
+  nonAcceptedBooking: Booking[] = [];
   faCheck = faCheck;
   faTimes = faTimes;
 
@@ -21,20 +20,21 @@ export class TrainerHomeComponent implements OnInit {
     private bookingService: BookingsService,
     private bookingStatusService: BookingStatusService
   ) {
-    this.bookings = this.bookingService.getBookings();
-    this.acceptedBookings = this.bookings.filter(
-      ({ is_accepted }) => is_accepted
-    );
-    this.nonAcceptedBookings = this.bookings.filter(
-      ({ is_accepted, is_rejected }) => !is_accepted && !is_rejected
-    );
+    this.bookingService.getBookings().subscribe((hero: Booking[]) => {
+      this.bookings = hero;
+      this.acceptedBooking = this.bookings.filter(
+        ({ bookingStatus }) => bookingStatus === 'accepted'
+      );
+      this.nonAcceptedBooking = this.bookings.filter(
+        ({ bookingStatus }) => bookingStatus === 'waiting'
+      );
+    });
   }
 
-  handleBookingStatus(id: number, accept_status: boolean): void {
+  handleBookingStatus(id: string, bookingStatus: string): void {
     this.bookingStatusService.addBookingsStatus({
       id,
-      is_accepted: accept_status,
-      is_rejected: !accept_status,
+      bookingStatus,
     });
   }
 

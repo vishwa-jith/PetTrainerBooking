@@ -11,7 +11,7 @@ import { AppointmentTrainerService } from '../services/appointmentTrainer/appoin
   styleUrls: ['./trainer-report.component.css'],
 })
 export class TrainerReportComponent implements OnInit {
-  bookings;
+  bookings: Booking[] = [];
   selectedBooking: Booking | undefined;
   faCalendarWeek = faCalendarWeek;
   faClock = faClock;
@@ -20,12 +20,14 @@ export class TrainerReportComponent implements OnInit {
     private fb: FormBuilder,
     private appointmentTrainerService: AppointmentTrainerService
   ) {
-    this.bookings = this.bookingsService.getBookings();
+    this.bookingsService
+      .getBookings()
+      .subscribe((hero: Booking[]) => (this.bookings = hero));
   }
 
   trainerReportForm = this.fb.group({ amount: [''], days: [''], report: [''] });
 
-  handleSelectedBooking(selectedId: number): void {
+  handleSelectedBooking(selectedId: string): void {
     this.selectedBooking = this.bookings.filter(
       ({ id }) => id === selectedId
     )[0];

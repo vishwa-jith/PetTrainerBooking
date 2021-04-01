@@ -8,3 +8,14 @@ export interface Signup {
   username: string;
   password: string;
 }
+export interface UserDetails {
+  id: string;
+  email: string;
+  username: string;
+  mobileNumber: string;
+  active: boolean;
+  role: string;
+  shopName: boolean;
+  experience: number;
+  message: string;
+}
