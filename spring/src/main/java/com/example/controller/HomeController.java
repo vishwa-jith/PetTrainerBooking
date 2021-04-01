@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.example.Dao.User;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import java.util.UUID;
 import org.springframework.dao.DataAccessException;
 
 @RestController
+@CrossOrigin()
 public class HomeController {
 
 	@Autowired

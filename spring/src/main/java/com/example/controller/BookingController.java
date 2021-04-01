@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
+@CrossOrigin()
 public class BookingController {
 
 	@Autowired
@@ -45,7 +47,8 @@ public class BookingController {
 
 	@GetMapping("/Trainer/booking/{id}")
 	public List<Booking> getBooking(@PathVariable("id") String id) {
-		List<Booking> booking = jdbc.query("select * from booking where trainerId='" + id + "';",
+		List<Booking> booking = jdbc.query(
+				"select id, lawFirmName, date, amount, bookingStatus from booking where trainerId='" + id + "';",
 				new ResultSetExtractor<List<Booking>>() {
 					@Override
 					public List<Booking> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -53,11 +56,10 @@ public class BookingController {
 						while (rs.next()) {
 							Booking e = new Booking();
 							e.setId(rs.getString(1));
-							e.setTrainerId(rs.getString(2));
-							e.setLawFirmName(rs.getString(3));
-							e.setDate(rs.getString(4));
-							e.setAmount(rs.getInt(5));
-							e.setBookingStatus(rs.getString(6));
+							e.setLawFirmName(rs.getString(2));
+							e.setDate(rs.getString(3));
+							e.setAmount(rs.getInt(4));
+							e.setBookingStatus(rs.getString(5));
 							list.add(e);
 						}
 						return list;

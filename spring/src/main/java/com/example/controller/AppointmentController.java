@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.sql.ResultSet;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
+@CrossOrigin()
 public class AppointmentController {
 
 	@Autowired
