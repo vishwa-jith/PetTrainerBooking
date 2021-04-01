@@ -1,6 +1,6 @@
 export interface Trainer {
-  id: number;
-  trainer_name: string;
-  years: number;
-  shop_name: string;
+  id: string;
+  username: string;
+  shopName: string;
+  experience: 8;
 }

@@ -1,17 +1,11 @@
 <nav class="navbar sticky-top navbar-dark bg-info">
   <div class="container">
-    <a class="navbar-brand" routerLink="/home">Navbar</a>
+    <a class="navbar-brand" routerLink="home">Navbar</a>
     <form class="d-flex">
-      <a
-        class="btn btn-info text-white me-2"
-        (click)="redirect('/home/trainer')"
-      >
+      <a class="btn btn-info text-white me-2" (click)="redirect('home')">
         Home
       </a>
-      <a
-        class="btn btn-info text-white me-2"
-        (click)="redirect('/report/trainer')"
-      >
+      <a class="btn btn-info text-white me-2" (click)="redirect('report')">
         Report
       </a>
       <a class="btn btn-info text-white me-2" (click)="redirect('logout')"

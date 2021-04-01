@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { TrainersService } from '../services/trainers/trainers.service';
 import { AddBookingService } from '../services/addBooking/add-booking.service';
+import { Trainer } from '../services/trainers/trainers.service.model';
 
 @Component({
   selector: 'app-user-home',
@@ -12,11 +13,15 @@ export class UserHomeComponent implements OnInit {
   trainers;
   trainerId: number | undefined;
   constructor(
-    trainerService: TrainersService,
+    private trainerService: TrainersService,
     private fb: FormBuilder,
     private addBookingService: AddBookingService
   ) {
-    this.trainers = trainerService.getTrainers();
+    this.trainers = this.trainerService
+      .getTrainers()
+      .subscribe((train: Trainer[]) => {
+        this.trainers = train;
+      });
   }
 
   addBookingForm = this.fb.group({ date: [''], time: [''] });
