@@ -8,9 +8,9 @@ import { UserDetails } from './auth.service.model';
 export class AuthService {
   constructor() {}
 
-  getuserDetails = () => {
+  getuserDetails(): any {
     return localStorage.getItem('userDetails');
-  };
+  }
 
   setUserDetails = (userDetails: UserDetails) => {
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
