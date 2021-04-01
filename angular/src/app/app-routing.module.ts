@@ -7,40 +7,53 @@ import { TrainerReportComponent } from './trainer-report/trainer-report.componen
 import { UserHomeComponent } from './user-home/user-home.component';
 import { UserReportComponent } from './user-report/user-report.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
-import { AuthGuard } from './auth.guard';
+import { LoggedUserGuard } from './guards/loggedUser/logged-user.guard';
+import { OwnerGuard } from './guards/owner/owner.guard';
+import { TrainerGuard } from './guards/trainer/trainer.guard';
+import { AdminGuard } from './guards/admin/admin.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, pathMatch: 'full' },
-  { path: 'signup', component: SignupComponent, pathMatch: 'full' },
+  {
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: 'full',
+    canActivate: [LoggedUserGuard],
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
+    pathMatch: 'full',
+    canActivate: [LoggedUserGuard],
+  },
   {
     path: 'home/trainer',
     component: TrainerHomeComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [TrainerGuard],
   },
   {
     path: 'report/trainer',
     component: TrainerReportComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [TrainerGuard],
   },
   {
     path: 'home',
     component: UserHomeComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [OwnerGuard],
   },
   {
     path: 'report',
     component: UserReportComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [OwnerGuard],
   },
   {
     path: 'home/admin',
     component: AdminHomeComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [AdminGuard],
   },
 ];
 
