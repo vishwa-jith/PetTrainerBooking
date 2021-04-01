@@ -13,7 +13,7 @@ export class LoggedUserGuard implements CanActivate {
       if (JSON.parse(userDetails).role === 'owner') {
         this.router.navigate(['/home']);
       } else if (JSON.parse(userDetails).role === 'trainer') {
-        this.router.navigate(['/home/trianer']);
+        this.router.navigate(['/home/trainer']);
       } else {
         this.router.navigate(['/home/admin']);
       }

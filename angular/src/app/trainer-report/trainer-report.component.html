@@ -18,7 +18,7 @@
           />
         </div>
         <div class="team-content">
-          <h3 class="name">{{ booking.lawFirmName }}</h3>
+          <h3 class="name">{{ booking.username }}</h3>
           <h4 class="title">{{ booking.date | date }}</h4>
           <h4 class="title">{{ booking.date | date: "shortTime" }}</h4>
         </div>
@@ -50,7 +50,7 @@
                     </div>
                   </div>
                   <p *ngIf="selectedBooking" style="margin-bottom: 0px">
-                    {{ selectedBooking.lawFirmName }}
+                    {{ selectedBooking.username }}
                   </p>
                 </div>
                 <div

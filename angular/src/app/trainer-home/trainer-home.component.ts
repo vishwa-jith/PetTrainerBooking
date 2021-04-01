@@ -20,8 +20,11 @@ export class TrainerHomeComponent implements OnInit {
     private bookingService: BookingsService,
     private bookingStatusService: BookingStatusService
   ) {
-    this.bookingService.getBookings().subscribe((hero: Booking[]) => {
-      this.bookings = hero;
+    this.getBookings();
+  }
+  getBookings() {
+    this.bookingService.getBookings().subscribe((book: Booking[]) => {
+      this.bookings = book;
       this.acceptedBooking = this.bookings.filter(
         ({ bookingStatus }) => bookingStatus === 'accepted'
       );
@@ -30,12 +33,16 @@ export class TrainerHomeComponent implements OnInit {
       );
     });
   }
-
   handleBookingStatus(id: string, bookingStatus: string): void {
-    this.bookingStatusService.addBookingsStatus({
-      id,
-      bookingStatus,
-    });
+    this.bookingStatusService
+      .addBookingsStatus({
+        id,
+        bookingStatus,
+      })
+      .subscribe((message: string) => {
+        console.log(message);
+        this.getBookings();
+      });
   }
 
   ngOnInit(): void {}

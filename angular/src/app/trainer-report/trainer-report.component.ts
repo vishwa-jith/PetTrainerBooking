@@ -22,7 +22,12 @@ export class TrainerReportComponent implements OnInit {
   ) {
     this.bookingsService
       .getBookings()
-      .subscribe((hero: Booking[]) => (this.bookings = hero));
+      .subscribe(
+        (book: Booking[]) =>
+          (this.bookings = book.filter(
+            ({ bookingStatus }) => bookingStatus === 'accepted'
+          ))
+      );
   }
 
   trainerReportForm = this.fb.group({ amount: [''], days: [''], report: [''] });

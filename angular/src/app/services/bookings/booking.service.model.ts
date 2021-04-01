@@ -4,4 +4,5 @@ export interface Booking {
   bookingStatus: string;
   date: string;
   lawFirmName: string;
+  username: string;
 }
