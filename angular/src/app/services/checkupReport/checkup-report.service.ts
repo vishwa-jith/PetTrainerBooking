@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CheckupReport } from './checkup-report.service.model';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CheckupReportService {
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
   checkupReports: CheckupReport[] = [
     {
       id: 1,
@@ -44,9 +48,18 @@ export class CheckupReportService {
     },
   ];
 
+  baseUrl =
+    'https://8080-bafeaefeddfbbbacedbefccaeeabbfbebdcacd.examlyiopb.examly.io';
+
+  userDetails = JSON.parse(this.authService.getuserDetails());
+
   checkupReport = (reportId: number) => {
     return this.checkupReports.filter(({ id }) => id === reportId)[0];
   };
 
-  constructor() {}
+  checkupReportForTrainer = (userId: string) => {
+    return this.http.get<any>(
+      this.baseUrl + `/checkupReport/${userId}/${this.userDetails.id}`
+    );
+  };
 }

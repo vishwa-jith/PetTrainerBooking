@@ -1,5 +1,5 @@
 export interface AppointmentTrainer {
-  id: number;
+  id: string;
   amount: number;
   days: number;
   report: string;

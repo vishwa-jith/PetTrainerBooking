@@ -7,3 +7,12 @@ export interface CheckupReport {
   days: number;
   amount: number;
 }
+export interface Report {
+  id: string;
+  appointmentId: string;
+  report: string;
+  date: string;
+  days: number;
+  amount: number;
+  issuedBy: string;
+}

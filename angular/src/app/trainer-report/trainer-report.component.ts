@@ -4,6 +4,8 @@ import { BookingsService } from '../services/bookings/bookings.service';
 import { Booking } from '../services/bookings/booking.service.model';
 import { faCalendarWeek, faClock } from '@fortawesome/free-solid-svg-icons';
 import { AppointmentTrainerService } from '../services/appointmentTrainer/appointment-trainer.service';
+import { CheckupReportService } from '../services/checkupReport/checkup-report.service';
+import { Report } from '../services/checkupReport/checkup-report.service.model';
 
 @Component({
   selector: 'app-trainer-report',
@@ -12,13 +14,16 @@ import { AppointmentTrainerService } from '../services/appointmentTrainer/appoin
 })
 export class TrainerReportComponent implements OnInit {
   bookings: Booking[] = [];
-  selectedBooking: Booking | undefined;
+  selectedBooking: any;
+  isReportUpdate: boolean = false;
+  initialFormData = this.fb.group({ amount: [''], days: [''], report: [''] });
   faCalendarWeek = faCalendarWeek;
   faClock = faClock;
   constructor(
     private bookingsService: BookingsService,
     private fb: FormBuilder,
-    private appointmentTrainerService: AppointmentTrainerService
+    private appointmentTrainerService: AppointmentTrainerService,
+    private checkupReportService: CheckupReportService
   ) {
     this.bookingsService
       .getBookings()
@@ -30,19 +35,44 @@ export class TrainerReportComponent implements OnInit {
       );
   }
 
-  trainerReportForm = this.fb.group({ amount: [''], days: [''], report: [''] });
+  trainerReportForm = this.initialFormData;
 
   handleSelectedBooking(selectedId: string): void {
     this.selectedBooking = this.bookings.filter(
       ({ id }) => id === selectedId
     )[0];
+    this.checkupReportService
+      .checkupReportForTrainer(selectedId)
+      .subscribe((report: Report) => {
+        if (report.id === selectedId) {
+          this.trainerReportForm = this.fb.group({
+            amount: [report.amount],
+            days: [report.days],
+            report: [report.report],
+          });
+          this.isReportUpdate = true;
+        } else {
+          this.trainerReportForm = this.initialFormData;
+        }
+      });
   }
 
   onSubmit(): void {
-    this.appointmentTrainerService.addAppointmentTrainer({
-      id: this.selectedBooking?.id,
-      ...this.trainerReportForm.value,
-    });
+    if (this.isReportUpdate) {
+      console.log('Under Contruction...');
+    } else {
+      this.appointmentTrainerService
+        .addAppointmentTrainer({
+          id: this.selectedBooking?.id,
+          ...this.trainerReportForm.value,
+        })
+        .subscribe((data: any) => {
+          console.log(data);
+          this.handleSelectedBooking(this.selectedBooking.id);
+        });
+    }
+    this.trainerReportForm = this.initialFormData;
+    this.isReportUpdate = false;
   }
   ngOnInit(): void {}
 }
