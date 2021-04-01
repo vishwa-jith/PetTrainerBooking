@@ -1,5 +1,6 @@
 export interface AddBooking {
-  id: number;
+  trainerId: string;
+  lawFirmName: string;
   date: string;
-  time: string;
+  bookingStatus: string;
 }

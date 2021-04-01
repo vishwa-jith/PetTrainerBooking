@@ -11,7 +11,7 @@ import { Trainer } from '../services/trainers/trainers.service.model';
 })
 export class UserHomeComponent implements OnInit {
   trainers;
-  trainerId: number | undefined;
+  selectedTrainer: any;
   constructor(
     private trainerService: TrainersService,
     private fb: FormBuilder,
@@ -27,13 +27,17 @@ export class UserHomeComponent implements OnInit {
   addBookingForm = this.fb.group({ date: [''], time: [''] });
 
   onSubmit(): void {
-    this.addBookingService.addBookings({
-      id: this.trainerId,
-      ...this.addBookingForm.value,
-    });
+    this.addBookingService
+      .addBookings({
+        trainerId: this.selectedTrainer.id,
+        lawFirmName: this.selectedTrainer.shopName,
+        date: `${this.addBookingForm.value.date} ${this.addBookingForm.value.time}`,
+        bookingStatus: 'waiting',
+      })
+      .subscribe((data: any) => console.log(data));
   }
-  handleTrainerId(id: number): void {
-    this.trainerId = id;
+  handleTrainer(trainer: Trainer): void {
+    this.selectedTrainer = trainer;
   }
 
   ngOnInit(): void {}
