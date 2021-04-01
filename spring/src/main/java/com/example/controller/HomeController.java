@@ -73,34 +73,46 @@ public class HomeController {
 
 	@PostMapping(value = "/login")
 	public User login(@RequestBody User user) {
-		User logUser = jdbc.query("select * from user where email='" + user.getEmail() + "';",
+		User res = jdbc.query(
+				"select id, email, username, mobileNumber, active, role, shopName, experience from user where email='"
+						+ user.getEmail() + "';",
 				new ResultSetExtractor<User>() {
 					@Override
 					public User extractData(ResultSet rs) throws SQLException, DataAccessException {
-
 						User e = new User();
 						while (rs.next()) {
 							e.setId(rs.getString(1));
 							e.setEmail(rs.getString(2));
+							e.setUsername(rs.getString(3));
+							e.setMobileNumber(rs.getString(4));
+							e.setActive(rs.getBoolean(5));
+							e.setRole(rs.getString(6));
+							e.setShopName(rs.getString(7));
+							e.setExperience(rs.getInt(8));
+						}
+						return e;
+					}
+				});
+		User logUser = jdbc.query("select * from user where email='" + user.getEmail() + "';",
+				new ResultSetExtractor<User>() {
+					@Override
+					public User extractData(ResultSet rs) throws SQLException, DataAccessException {
+						User e = new User();
+						while (rs.next()) {
+							e.setEmail(rs.getString(2));
 							e.setPassword(rs.getString(3));
-							e.setUsername(rs.getString(4));
-							e.setMobileNumber(rs.getString(5));
-							e.setActive(rs.getBoolean(6));
-							e.setRole(rs.getString(7));
-							e.setShopName(rs.getString(8));
-							e.setExperience(rs.getInt(9));
 						}
 						return e;
 					}
 				});
 		if (logUser.getEmail() == null) {
-			logUser.setMessage("Not such account exist");
+			res.setMessage("Not such account exist");
 		} else if (logUser.getEmail().equals(user.getEmail()) && logUser.getPassword().equals(user.getPassword())) {
-			logUser.setMessage("Login Successfull");
+			res.setMessage("Login Successfull");
 		} else {
-			logUser.setMessage("Wrong username or password");
+			res.setMessage("Wrong username or password");
 		}
-		return logUser;
+		return res;
 	}
 
 	@GetMapping("/Admin")
@@ -115,10 +127,7 @@ public class HomeController {
 							e.setId(rs.getString(1));
 							e.setUsername(rs.getString(4));
 							e.setEmail(rs.getString(2));
-							e.setPassword(rs.getString(3));
 							e.setMobileNumber(rs.getString(5));
-							e.setActive(rs.getBoolean(6));
-							e.setRole(rs.getString(7));
 							e.setShopName(rs.getString(8));
 							e.setExperience(rs.getInt(9));
 							list.add(e);

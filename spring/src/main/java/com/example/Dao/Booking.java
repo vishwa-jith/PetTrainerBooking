@@ -7,6 +7,7 @@ public class Booking {
     private String date;
     private int amount;
     private String bookingStatus;
+    private String username;
 
     public String getId() {
         return id;
@@ -54,6 +55,14 @@ public class Booking {
 
     public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     

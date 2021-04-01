@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
-@CrossOrigin()
+@CrossOrigin
 public class BookingController {
 
 	@Autowired
@@ -55,8 +55,22 @@ public class BookingController {
 						List<Booking> list = new ArrayList<Booking>();
 						while (rs.next()) {
 							Booking e = new Booking();
+					
+							User userUsername = jdbc.query("select * from user where id='" + rs.getString(1) + "';",
+									new ResultSetExtractor<User>() {
+										@Override
+										public User extractData(ResultSet rs) throws SQLException, DataAccessException {
+											User e = new User();
+											while (rs.next()) {
+												e.setUsername(rs.getString(4));
+											}
+											return e;
+										}
+									});
+					
 							e.setId(rs.getString(1));
 							e.setLawFirmName(rs.getString(2));
+							e.setUsername(userUsername.getUsername());
 							e.setDate(rs.getString(3));
 							e.setAmount(rs.getInt(4));
 							e.setBookingStatus(rs.getString(5));
@@ -67,7 +81,7 @@ public class BookingController {
 				});
 		return booking;
 	}
-
+	@CrossOrigin
 	@PutMapping("/Trainer/booking/{id}/{trainerId}")
 	public String updateBookingStatus(@PathVariable("id") String id, @PathVariable("trainerId") String trainerId,
 			@RequestBody Booking booking) {
