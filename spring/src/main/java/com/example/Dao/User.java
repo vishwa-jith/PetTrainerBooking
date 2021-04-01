@@ -10,6 +10,7 @@ public class User {
     private String role;
     private String shopName;
     private int experience;
+    private String message;
 
     public String getId() {
         return id;
@@ -83,6 +84,14 @@ public class User {
         this.experience = experience;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public User() {
     }
 
@@ -97,11 +106,12 @@ public class User {
         this.username = username;
         this.mobileNumber = mobileNumber;
     }
+
     @Override
     public String toString() {
         return "User [active=" + active + ", email=" + email + ", experience=" + experience + ", id=" + id
-                + ", mobileNumber=" + mobileNumber + ", password=" + password + ", role=" + role + ", shopName="
-                + shopName + ", username=" + username + "]";
+                + ", message=" + message + ", mobileNumber=" + mobileNumber + ", password=" + password + ", role="
+                + role + ", shopName=" + shopName + ", username=" + username + "]";
     }
-
+ 
 }

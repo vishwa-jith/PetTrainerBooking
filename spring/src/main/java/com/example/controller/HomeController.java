@@ -72,7 +72,7 @@ public class HomeController {
 	}
 
 	@PostMapping(value = "/login")
-	public String login(@RequestBody User user) {
+	public User login(@RequestBody User user) {
 		User logUser = jdbc.query("select * from user where email='" + user.getEmail() + "';",
 				new ResultSetExtractor<User>() {
 					@Override
@@ -83,17 +83,24 @@ public class HomeController {
 							e.setId(rs.getString(1));
 							e.setEmail(rs.getString(2));
 							e.setPassword(rs.getString(3));
+							e.setUsername(rs.getString(4));
+							e.setMobileNumber(rs.getString(5));
+							e.setActive(rs.getBoolean(6));
+							e.setRole(rs.getString(7));
+							e.setShopName(rs.getString(8));
+							e.setExperience(rs.getInt(9));
 						}
 						return e;
 					}
 				});
 		if (logUser.getEmail() == null) {
-			return "Not such account exist";
+			logUser.setMessage("Not such account exist");
 		} else if (logUser.getEmail().equals(user.getEmail()) && logUser.getPassword().equals(user.getPassword())) {
-			return "Login Successful";
+			logUser.setMessage("Login Successfull");
 		} else {
-			return "Wrong username or password";
+			logUser.setMessage("Wrong username or password");
 		}
+		return logUser;
 	}
 
 	@GetMapping("/Admin")
