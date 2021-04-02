@@ -50,11 +50,10 @@ export class AuthService {
   }
 
   login(loginDetails: Login): any {
-    console.log(loginDetails);
     return this.http.post<any>(this.baseUrl + `/login`, loginDetails);
   }
 
   signup(signupDetails: Signup): any {
-    console.log(signupDetails);
+    return this.http.post<any>(this.baseUrl + `/signup`, signupDetails);
   }
 }
