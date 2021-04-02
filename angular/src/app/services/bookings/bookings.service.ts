@@ -19,4 +19,9 @@ export class BookingsService {
       this.baseUrl + `/Trainer/booking/${this.userDetails.id}`
     );
   }
+  getBooking(id: string): any {
+    return this.http.get<Booking>(
+      this.baseUrl + `/booking/${this.userDetails.id}/${id}`
+    );
+  }
 }
