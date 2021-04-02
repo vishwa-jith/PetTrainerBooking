@@ -4,3 +4,11 @@ export interface Trainer {
   shopName: string;
   experience: 8;
 }
+export interface TrainerForAdmin {
+  id: string;
+  email: string;
+  username: string;
+  password: string;
+  shopName: string;
+  experience: 8;
+}

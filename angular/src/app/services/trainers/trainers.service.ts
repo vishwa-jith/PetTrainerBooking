@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Trainer } from './trainers.service.model';
+import { Trainer, TrainerForAdmin } from './trainers.service.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,9 @@ export class TrainersService {
     'https://8080-bafeaefeddfbbbacedbefccaeeabbfbebdcacd.examlyiopb.examly.io';
 
   getTrainers(): any {
-    return this.http.get<Trainer[]>(this.baseUrl + `/Admin/`);
+    return this.http.get<Trainer[]>(this.baseUrl + `/Trainer`);
+  }
+  getTrainersForAdmin(): any {
+    return this.http.get<TrainerForAdmin[]>(this.baseUrl + `/Admin`);
   }
 }
