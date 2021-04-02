@@ -25,7 +25,7 @@ public class AppointmentController {
 
 	@GetMapping("/createAppointment")
 	public String welcomeAppointment() {
-		String sql = "CREATE TABLE appointment (id VARCHAR(40) NOT NULL PRIMARY KEY, userId VARCHAR(40), date TIMESTAMP, issuedBy VARCHAR(40),  CONSTRAINT FK_AppointmentUserOrder FOREIGN KEY (userId) REFERENCES booking(id))";
+		String sql = "CREATE TABLE appointment (id VARCHAR(40), userId VARCHAR(40), date TIMESTAMP, issuedBy VARCHAR(40), PRIMARY KEY (id, userId),  CONSTRAINT FK_AppointmentUserOrder FOREIGN KEY (userId) REFERENCES booking(id))";
 		jdbc.execute(sql);
 		return "Welcome Appointment";
 	}

@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.example.Dao.Booking;
-import com.example.Dao.Appointment;
+import com.example.Dao.Message;
 import com.example.Dao.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +37,14 @@ public class BookingController {
 	}
 
 	@PostMapping("/booking")
-	public String addBooking(@RequestBody Booking booking) {
+	public Message addBooking(@RequestBody Booking booking) {
 		String query = "insert into booking (id, trainerId, lawFirmName, date, bookingStatus) values ('"
 				+ booking.getId() + "','" + booking.getTrainerId() + "','" + booking.getLawFirmName() + "','"
-				+ booking.getDate() + "','" + booking.getBookingStatus() + "')";
+				+ booking.getDate() + "','" + booking.getBookingStatus() + "');";
 		jdbc.update(query);
-		return "Booking added successfully";
+		Message msg = new Message();
+		msg.setMessage("Booking added successfully");
+		return msg;
 	}
 
 	@GetMapping("/Trainer/booking/{id}")
@@ -55,7 +57,7 @@ public class BookingController {
 						List<Booking> list = new ArrayList<Booking>();
 						while (rs.next()) {
 							Booking e = new Booking();
-					
+
 							User userUsername = jdbc.query("select * from user where id='" + rs.getString(1) + "';",
 									new ResultSetExtractor<User>() {
 										@Override
@@ -67,7 +69,7 @@ public class BookingController {
 											return e;
 										}
 									});
-					
+
 							e.setId(rs.getString(1));
 							e.setLawFirmName(rs.getString(2));
 							e.setUsername(userUsername.getUsername());
@@ -81,9 +83,45 @@ public class BookingController {
 				});
 		return booking;
 	}
+
+	@GetMapping("/booking/{id}/{trainerId}")
+	public Booking getBookingWithId(@PathVariable("id") String id, @PathVariable("trainerId") String trainerId) {
+		Booking booking = jdbc.query("select * from booking where id='" + id + "' AND trainerId='" + trainerId + "';",
+				new ResultSetExtractor<Booking>() {
+					@Override
+					public Booking extractData(ResultSet rs) throws SQLException, DataAccessException {
+						Booking e = new Booking();
+						while (rs.next()) {
+
+							User userUsername = jdbc.query("select * from user where id='" + rs.getString(1) + "';",
+									new ResultSetExtractor<User>() {
+										@Override
+										public User extractData(ResultSet rs) throws SQLException, DataAccessException {
+											User e = new User();
+											while (rs.next()) {
+												e.setUsername(rs.getString(4));
+											}
+											return e;
+										}
+									});
+
+							e.setId(rs.getString(1));
+							e.setTrainerId(rs.getString(2));
+							e.setLawFirmName(rs.getString(3));
+							e.setUsername(userUsername.getUsername());
+							e.setDate(rs.getString(4));
+							e.setAmount(rs.getInt(5));
+							e.setBookingStatus(rs.getString(6));
+						}
+						return e;
+					}
+				});
+		return booking;
+	}
+
 	@CrossOrigin
 	@PutMapping("/Trainer/booking/{id}/{trainerId}")
-	public String updateBookingStatus(@PathVariable("id") String id, @PathVariable("trainerId") String trainerId,
+	public Message updateBookingStatus(@PathVariable("id") String id, @PathVariable("trainerId") String trainerId,
 			@RequestBody Booking booking) {
 		String query = "update booking set bookingStatus='" + booking.getBookingStatus() + "' where id='" + id
 				+ "'AND trainerId='" + trainerId + "';";
@@ -117,7 +155,9 @@ public class BookingController {
 			jdbc.update(addAppointmentQuery);
 
 		}
-		return "Booking status updated successfully";
+		Message msg = new Message();
+		msg.setMessage("Booking status updated successfully");
+		return msg;
 	}
 
 	@DeleteMapping("/booking/{id}/{trainerId}")
