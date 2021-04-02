@@ -10,60 +10,56 @@
           aria-label="Search"
           style="max-width: 70vh"
         />
-        <button class="btn btn-outline-success btn-tool me-2" type="submit">
-          Search
-        </button>
-        <button class="btn btn-outline-success btn-tool me-2" type="submit">
-          Add
-        </button>
+        <button class="btn btn-light me-2" type="button">Search</button>
+        <button class="btn btn-light me-2" type="button">Add</button>
       </form>
     </div>
   </div>
   <!--Display table-->
   <div class="row">
     <div class="col-md-8">
-      <div class="group-content">
-        <table class="table table-responsive table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Trainer ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col" colspan="2">Options</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let trainer of trainers">
-            <tr>
-              <th scope="row">{{ trainer.id }}</th>
-              <td>{{ trainer.username }}</td>
-              <td>{{ trainer.email }}</td>
-              <td>
-                <button class="btn bg-light">
-                  <fa-icon class="text-success" [icon]="faEdit"></fa-icon>
-                </button>
-              </td>
-              <td>
-                <button class="btn bg-light">
-                  <fa-icon class="text-danger" [icon]="faTrashAlt"></fa-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <table class="group-content table table-responsive table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col" colspan="2">Options</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let trainer of trainers">
+          <tr>
+            <td>{{ trainer.username }}</td>
+            <td>{{ trainer.email }}</td>
+            <td class="text-center">
+              <button
+                class="btn bg-light"
+                (click)="handleSelectedTrainer(trainer)"
+              >
+                <fa-icon class="text-success" [icon]="faEdit"></fa-icon>
+              </button>
+            </td>
+            <td class="text-center">
+              <button class="btn bg-light" (click)="deleteTrainer(trainer.id)">
+                <fa-icon class="text-danger" [icon]="faTrashAlt"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!--Display Sidebox-->
-    <div class="col-md-4">
-      <div class="paper no-gutters">
+    <div class="col-md-4 col-12">
+      <div class="paper">
         <h2 class="text-center pb-2 pt-4">Add/Edit Details</h2>
-        <form>
+        <form [formGroup]="newTrainerForm" (ngSubmit)="onSubmit()">
           <div class="form-row d-flex justify-content-center">
             <div class="col-lg-10 my-2">
               <input
-                type="name"
+                type="username"
                 placeholder="Enter name"
                 class="form-control"
+                formControlName="username"
               />
             </div>
           </div>
@@ -73,6 +69,7 @@
                 type="email"
                 placeholder="Enter email"
                 class="form-control"
+                formControlName="email"
               />
             </div>
           </div>
@@ -81,7 +78,9 @@
               <input
                 type="number"
                 placeholder="Enter experience"
+                name="experience"
                 class="form-control"
+                formControlName="experience"
               />
             </div>
           </div>
@@ -91,21 +90,31 @@
                 type="text"
                 placeholder="Enter Shop Name"
                 class="form-control"
+                formControlName="shopName"
+                name="shopName"
               />
             </div>
           </div>
           <div class="form-row d-flex justify-content-center">
             <div class="col-lg-10 my-2">
               <input
-                type="password"
+                type="text"
                 placeholder="Enter password"
                 class="form-control"
+                formControlName="password"
               />
             </div>
           </div>
         </form>
         <div class="form-row d-flex justify-content-center my-2">
-          <button type="submit" class="btn btn-dark">Update</button>
+          <button type="submit" class="btn btn-dark me-2" (click)="onSubmit()">
+            {{ selectedTrainer ? "Update" : "Submit" }}
+          </button>
+          <div *ngIf="selectedTrainer">
+            <button class="btn btn-outline-dark me-2" (click)="cancelUpdate()">
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>

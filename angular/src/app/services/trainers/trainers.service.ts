@@ -14,7 +14,23 @@ export class TrainersService {
   getTrainers(): any {
     return this.http.get<Trainer[]>(this.baseUrl + `/Trainer`);
   }
+
   getTrainersForAdmin(): any {
     return this.http.get<TrainerForAdmin[]>(this.baseUrl + `/Admin`);
+  }
+
+  addNewTrainer(trainer: TrainerForAdmin): any {
+    return this.http.post<any>(this.baseUrl + `/Admin/add`, {
+      role: 'trainer',
+      ...trainer,
+    });
+  }
+
+  updateTrainer(trainer: TrainerForAdmin, id: string): any {
+    return this.http.put<any>(this.baseUrl + `/Admin/update/${id}`, trainer);
+  }
+
+  deleteTrainer(id: string): any {
+    return this.http.delete<any>(this.baseUrl + `/Admin/remove/${id}`);
   }
 }
