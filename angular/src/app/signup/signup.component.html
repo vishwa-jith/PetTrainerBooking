@@ -1,6 +1,6 @@
 <section class="Form">
   <div class="container">
-    <div class="row no-gutters" style="height: 100%">
+    <div class="row bg-light no-gutters" style="height: 100%">
       <div class="col-lg-6 text-center p-0">
         <img
           src="https://www.helpguide.org/wp-content/uploads/dog-resting-chin-on-persons-hand-768.jpg"
@@ -21,7 +21,10 @@
                 formControlName="email"
                 [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }"
               />
-              <div *ngIf=" f.email.touched && f.email.errors" class="invalid-feedback">
+              <div
+                *ngIf="f.email.touched && f.email.errors"
+                class="invalid-feedback"
+              >
                 <div *ngIf="f.email.errors.required">Email is required</div>
                 <div *ngIf="f.email.errors.email">Email must be valid</div>
               </div>
@@ -34,13 +37,22 @@
                 placeholder="Enter Mobile number"
                 class="form-control my-2 p-2"
                 formControlName="mobile_no"
-                [ngClass]="{ 'is-invalid': f.mobile_no.touched && f.mobile_no.errors}"
+                [ngClass]="{
+                  'is-invalid': f.mobile_no.touched && f.mobile_no.errors
+                }"
               />
-              <div *ngIf="f.mobile_no.touched && f.mobile_no.invalid" class="invalid-feedback">
-                <div *ngIf="f.mobile_no.errors.required">Mobile Number is required.</div>
-                <div *ngIf="f.mobile_no.errors.pattern">Please, Enter 10 digit Mobile Number.</div>
+              <div
+                *ngIf="f.mobile_no.touched && f.mobile_no.invalid"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.mobile_no.errors.required">
+                  Mobile Number is required.
+                </div>
+                <div *ngIf="f.mobile_no.errors.pattern">
+                  Please, Enter 10 digit Mobile Number.
+                </div>
+              </div>
             </div>
-          </div>
           </div>
           <div class="form-row" class="d-flex justify-content-center">
             <div class="col-9">
@@ -49,12 +61,21 @@
                 placeholder="Enter username"
                 class="form-control my-2 p-2"
                 formControlName="username"
-                [ngClass]="{'is-invalid':f.username.touched && f.username.errors}"
+                [ngClass]="{
+                  'is-invalid': f.username.touched && f.username.errors
+                }"
               />
-              <div *ngIf="f.username.touched && f.username.errors" class="invalid-feedback">
-                <div *ngIf="f.username.errors.required">Username is required</div>
-                <div *ngIf="f.username.errors.minlength">Username must be atleast 3 characters</div>
-            </div>
+              <div
+                *ngIf="f.username.touched && f.username.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.username.errors.required">
+                  Username is required
+                </div>
+                <div *ngIf="f.username.errors.minlength">
+                  Username must be atleast 3 characters
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-row" class="d-flex justify-content-center">
@@ -64,12 +85,21 @@
                 placeholder="Enter password"
                 class="form-control my-2 p-2"
                 formControlName="password"
-                [ngClass]="{'is-invalid':f.password.touched && f.password.errors}"
+                [ngClass]="{
+                  'is-invalid': f.password.touched && f.password.errors
+                }"
               />
-              <div *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
-                <div *ngIf="f.password.errors.required">Password is required</div>
-                <div *ngIf="f.password.errors.minlength">Password must be atleast 6 characters</div>
-            </div>
+              <div
+                *ngIf="f.password.touched && f.password.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.password.errors.required">
+                  Password is required
+                </div>
+                <div *ngIf="f.password.errors.minlength">
+                  Password must be atleast 6 characters
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-row" class="d-flex justify-content-center">
@@ -79,18 +109,29 @@
                 placeholder="Confirm password"
                 class="form-control my-2 p-2"
                 formControlName="confirmPassword"
-                [ngClass]="{'is-invalid':f.confirmPassword.touched && f.confirmPassword.errors}"
+                [ngClass]="{
+                  'is-invalid':
+                    f.confirmPassword.touched && f.confirmPassword.errors
+                }"
               />
-              <div *ngIf="f.confirmPassword.touched && f.confirmPassword.errors" class="invalid-feedback">
-                <div *ngIf="f.confirmPassword.errors.required">Password is required</div>
-                <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
-            </div>
-              
+              <div
+                *ngIf="f.confirmPassword.touched && f.confirmPassword.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.confirmPassword.errors.required">
+                  Password is required
+                </div>
+                <div *ngIf="f.confirmPassword.errors.mustMatch">
+                  Passwords must match
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-row" class="d-flex justify-content-center">
             <div class="col-9">
-              <button type="submit" class="btn mt-3 mb-3" (click)="onSubmit">Signup</button>
+              <button type="submit" class="btn mt-3 mb-3" (click)="(onSubmit)">
+                Signup
+              </button>
             </div>
           </div>
         </form>

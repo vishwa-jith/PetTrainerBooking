@@ -1,7 +1,7 @@
 <nav class="navbar sticky-top navbar-dark bg-info">
   <div class="container">
-    <a class="navbar-brand" routerLink="home">Navbar</a>
-    <form class="d-flex">
+    <a class="navbar-brand" routerLink="home">Magic Pet</a>
+    <form class="d-flex" *ngIf="userDetails">
       <div *ngIf="userDetails.role != 'admin'">
         <a class="btn btn-info text-white me-2" (click)="redirect('home')">
           Home
