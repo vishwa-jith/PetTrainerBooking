@@ -40,7 +40,6 @@ public class AppointmentController {
 						while (rs.next()) {
 							Appointment e = new Appointment();
 							e.setId(rs.getString(1));
-							e.setUserId(rs.getString(2));
 							e.setDate(rs.getString(3));
 							e.setIssuedBy(rs.getString(4));
 							list.add(e);

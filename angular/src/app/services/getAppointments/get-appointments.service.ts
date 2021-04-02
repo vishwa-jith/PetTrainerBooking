@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Appointment } from './get-appointments.services.model';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GetAppointmentsService {
-  appointments: Appointment[] = [
-    { id: 1, booking_id: 1, trainer_name: 'Lokesh R', date: '22/03/2021' },
-    { id: 2, booking_id: 2, trainer_name: 'Vishwajith V', date: '05/11/2021' },
-    {
-      id: 3,
-      booking_id: 3,
-      trainer_name: 'Suresh Anand K',
-      date: '12/05/2021',
-    },
-    { id: 4, booking_id: 4, trainer_name: 'Sai Prasadth', date: '02/09/2021' },
-  ];
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
+  baseUrl =
+    'https://8080-bafeaefeddfbbbacedbefccaeeabbfbebdcacd.examlyiopb.examly.io';
+
+  userDetails = JSON.parse(this.authService.getuserDetails());
+
   getAppointments = () => {
-    return this.appointments;
+    return this.http.get<Appointment[]>(
+      this.baseUrl + `/Appointment/${this.userDetails.id}`
+    );
   };
-  constructor() {}
 }
