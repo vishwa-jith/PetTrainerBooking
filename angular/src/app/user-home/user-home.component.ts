@@ -15,6 +15,7 @@ export class UserHomeComponent implements OnInit {
   trainers;
   selectedTrainer: any;
   isBookinUpdate: boolean = false;
+  bookingStatus: string = '';
   initialFormDate = this.fb.group({ date: [''], time: [''] });
   constructor(
     private trainerService: TrainersService,
@@ -52,6 +53,8 @@ export class UserHomeComponent implements OnInit {
   }
   handleTrainer(trainer: Trainer): void {
     this.selectedTrainer = trainer;
+    this.addBookingForm = this.initialFormDate;
+    this.isBookinUpdate = false;
     this.bookingsService
       .getBooking(this.selectedTrainer.id)
       .subscribe((booking: any) => {
@@ -61,9 +64,9 @@ export class UserHomeComponent implements OnInit {
             time: [new Date(booking.date).toTimeString().substr(0, 8)],
           });
           this.isBookinUpdate = true;
-        } else {
-          this.addBookingForm = this.initialFormDate;
         }
+        console.log(booking.bookingStatus);
+        this.bookingStatus = booking.bookingStatus;
       });
   }
 

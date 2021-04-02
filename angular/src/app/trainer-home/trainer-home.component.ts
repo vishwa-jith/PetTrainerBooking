@@ -39,8 +39,8 @@ export class TrainerHomeComponent implements OnInit {
         id,
         bookingStatus,
       })
-      .subscribe((message: string) => {
-        console.log(message);
+      .subscribe((data: any) => {
+        console.log(data);
         this.getBookings();
       });
   }

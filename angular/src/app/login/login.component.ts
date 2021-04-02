@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value).subscribe((data: any) => {
       this.authService.setUserDetails(data);
       this.authService.redirect('home');
+      location.reload();
     });
   }
 

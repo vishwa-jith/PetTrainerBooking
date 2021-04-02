@@ -29,7 +29,13 @@
           <div class="modal-content">
             <div class="modal-body">
               <div class="d-flex justify-content-between align-items-self">
-                <h1 class="modal-title">Add Appointment</h1>
+                <h1 class="modal-title">
+                  {{
+                    bookingStatus === "accepted"
+                      ? "Appointment Order"
+                      : "Add Appointment"
+                  }}
+                </h1>
                 <button
                   type="button"
                   class="btn-close"
@@ -45,13 +51,35 @@
                   />
                 </div>
                 <div class="team-content">
-                  <h3 class="name">{{ trainer.username }}</h3>
+                  <h2 class="name">{{ trainer.username }}</h2>
                   <h4 class="title">{{ trainer.experience }} years</h4>
                   <h4 class="title">{{ trainer.shopName }}</h4>
+                  <h4
+                    *ngIf="bookingStatus === 'accepted'"
+                    class="title"
+                    style="font-weight: bold"
+                  >
+                    {{ addBookingForm.value.date | date }}
+                  </h4>
+                  <h4
+                    *ngIf="bookingStatus === 'accepted'"
+                    class="title"
+                    style="font-weight: bold"
+                  >
+                    {{
+                      addBookingForm.value.date +
+                        " " +
+                        addBookingForm.value.time | date: "shortTime"
+                    }}
+                  </h4>
                 </div>
                 <ul class="social"></ul>
               </div>
-              <form [formGroup]="addBookingForm" (ngSubmit)="onSubmit()">
+              <form
+                *ngIf="bookingStatus !== 'accepted'"
+                [formGroup]="addBookingForm"
+                (ngSubmit)="onSubmit()"
+              >
                 <div class="mb-3">
                   <label for="{{ 'date' + trainer.id }}" class="form-label"
                     >Select Date</label
