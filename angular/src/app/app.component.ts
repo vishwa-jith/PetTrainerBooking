@@ -13,21 +13,25 @@ export class AppComponent {
   userDetails = JSON.parse(this.authService.getuserDetails());
 
   redirect(path: string): void {
-    if (this.userDetails.role === 'owner') {
-      if (path === 'home') {
+    if (path === 'home') {
+      if (this.userDetails.role === 'owner') {
         path = '/home';
-      } else if (path === 'report') {
-        path = '/report';
-      }
-    } else if (this.userDetails.role === 'trainer') {
-      if (path === 'home') {
+      } else if (this.userDetails.role === 'trainer') {
         path = '/home/trainer';
-      } else if (path === 'report') {
+      } else {
+        path = '/home/admin';
+      }
+    } else if (path === 'report') {
+      if (this.userDetails.role === 'owner') {
+        path = '/report';
+      } else if (this.userDetails.role === 'trainer') {
         path = '/report/trainer';
       }
     } else {
-      path = '/home/admin';
+      localStorage.clear();
+      path = '/login';
     }
+    console.log(path);
     this.router.navigate([path]);
   }
 }
