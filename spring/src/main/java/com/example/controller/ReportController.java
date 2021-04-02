@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.example.Dao.Report;
+import com.example.Dao.Message;
 import com.example.Dao.User;
 import com.example.Dao.Booking;
 
@@ -33,7 +34,7 @@ public class ReportController {
     }
 
     @PostMapping(value = "/Trainer/report")
-    public String addReport(@RequestBody Report report) {
+    public Message addReport(@RequestBody Report report) {
         User trainerUsername = jdbc.query("select * from user where id='" + report.getAppointmentId() + "';",
                 new ResultSetExtractor<User>() {
                     @Override
@@ -67,8 +68,9 @@ public class ReportController {
                 + report.getDays() + "','" + trainerUsername.getUsername() + "');";
 
         jdbc.update(query);
-
-        return "Report added Sucessfully";
+        Message msg = new Message();
+        msg.setMessage("Report added Sucessfully");
+        return msg;
     }
 
     @GetMapping("/checkupReport/{id}/{trainerId}")

@@ -36,7 +36,7 @@ public class HomeController {
 	}
 
 	@PostMapping(value = "/signup")
-	public String signup(@RequestBody User user) {
+	public Message signup(@RequestBody User user) {
 		User userEmail = jdbc.query("select * from user where email='" + user.getEmail() + "';",
 				new ResultSetExtractor<User>() {
 					@Override
@@ -59,17 +59,19 @@ public class HomeController {
 						return e;
 					}
 				});
+		Message msg=new Message();
 		if (userEmail.getEmail() != null) {
-			return "User already exist with this email";
+			msg.setMessage("User already exist with this email");
 		} else if (userUsername.getUsername() != null) {
-			return "User already exist with this username";
+			msg.setMessage("User already exist with this username");
 		} else {
 			String query = "insert into user (id, username, email, password, mobileNumber) values ('"
 					+ UUID.randomUUID() + "','" + user.getUsername() + "','" + user.getEmail() + "','"
 					+ user.getPassword() + "','" + user.getMobileNumber() + "')";
 			jdbc.update(query);
-			return "Signup Successful";
+			msg.setMessage("Signup Successful");
 		}
+		return msg;
 	}
 
 	@PostMapping(value = "/login")
