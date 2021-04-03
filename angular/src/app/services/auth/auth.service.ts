@@ -17,7 +17,7 @@ export class AuthService {
     return localStorage.getItem('userDetails');
   }
 
-  setUserDetails = (userDetails: UserDetails) => {
+  setUserDetails = (userDetails: any) => {
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
   };
 

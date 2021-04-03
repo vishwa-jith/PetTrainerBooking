@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Appointment } from './get-appointments.services.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -14,9 +14,16 @@ export class GetAppointmentsService {
 
   userDetails = JSON.parse(this.authService.getuserDetails());
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.userDetails.jwt}`,
+    }),
+  };
   getAppointments = () => {
     return this.http.get<Appointment[]>(
-      this.baseUrl + `/Appointment/${this.userDetails.id}`
+      this.baseUrl + `/Appointment`,
+      this.httpOptions
     );
   };
 }

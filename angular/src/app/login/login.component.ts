@@ -18,11 +18,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.authService.login(this.loginForm.value).subscribe((data: any) => {
-      this.authService.setUserDetails(data);
       this.snackBar.open(data.message, 'close', {
         duration: 2000,
       });
-      if (data.message === 'Login Successfull') {
+      if (data.jwt) {
+        this.authService.setUserDetails(data);
         location.reload();
       }
     });

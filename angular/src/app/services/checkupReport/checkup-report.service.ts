@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -13,15 +13,24 @@ export class CheckupReportService {
 
   userDetails = JSON.parse(this.authService.getuserDetails());
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.userDetails.jwt}`,
+    }),
+  };
+
   checkupReportForOwner = (trainerId: string): any => {
     return this.http.get<any>(
-      this.baseUrl + `/checkupReport/${this.userDetails.id}/${trainerId}`
+      this.baseUrl + `/checkupReport/${trainerId}`,
+      this.httpOptions
     );
   };
 
   checkupReportForTrainer = (userId: string) => {
     return this.http.get<any>(
-      this.baseUrl + `/checkupReport/${userId}/${this.userDetails.id}`
+      this.baseUrl + `/Trainer/checkupReport/${userId}`,
+      this.httpOptions
     );
   };
 }
