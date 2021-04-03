@@ -35,7 +35,18 @@ export class UserHomeComponent implements OnInit {
 
   onSubmit(): void {
     if (this.isBookinUpdate) {
-      console.log('Under Contruction');
+      this.bookingsService
+        .updateBooking(
+          `${this.addBookingForm.value.date} ${this.addBookingForm.value.time}`,
+          this.selectedTrainer.id
+        )
+        .subscribe((data: any) => {
+          console.log(data);
+          this.snackBar.open(data.message, 'close', {
+            duration: 2000,
+          });
+          this.handleTrainer(this.selectedTrainer);
+        });
     } else {
       this.addBookingService
         .addBookings({
@@ -52,7 +63,6 @@ export class UserHomeComponent implements OnInit {
           this.handleTrainer(this.selectedTrainer);
         });
     }
-    this.addBookingForm = this.initialFormDate;
     this.isBookinUpdate = false;
   }
   handleTrainer(trainer: Trainer): void {

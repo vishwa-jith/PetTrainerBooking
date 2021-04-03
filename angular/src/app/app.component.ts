@@ -10,6 +10,11 @@ export class AppComponent {
   constructor(private authService: AuthService) {}
   userDetails = JSON.parse(this.authService.getuserDetails());
   redirect(path: string): void {
-    this.authService.redirect(path);
+    if (path === 'logout') {
+      localStorage.clear();
+      location.reload();
+    } else {
+      this.authService.redirect(path);
+    }
   }
 }

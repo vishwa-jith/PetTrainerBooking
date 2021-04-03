@@ -24,4 +24,10 @@ export class BookingsService {
       this.baseUrl + `/booking/${this.userDetails.id}/${id}`
     );
   }
+  updateBooking(date: string, id: string): any {
+    return this.http.put<Booking>(
+      this.baseUrl + `/booking/${this.userDetails.id}/${id}`,
+      { date }
+    );
+  }
 }
