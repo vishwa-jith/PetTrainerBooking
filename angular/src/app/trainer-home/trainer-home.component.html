@@ -41,33 +41,51 @@
                 aria-label="Close"
               ></button>
             </div>
-            <div *ngFor="let booking of nonAcceptedBooking">
-              <div class="list-item">
-                <div class="picture">
-                  <img
-                    class="img-fluid"
-                    src="https://icons-for-free.com/iconfiles/png/512/avatar+human+male+man+men+people+person+profile+user+users-1320196163635839021.png"
-                  />
+            <div *ngIf="nonAcceptedBooking.length">
+              <div *ngFor="let booking of nonAcceptedBooking">
+                <div class="list-item">
+                  <div class="picture">
+                    <img
+                      class="img-fluid"
+                      src="https://icons-for-free.com/iconfiles/png/512/avatar+human+male+man+men+people+person+profile+user+users-1320196163635839021.png"
+                    />
+                  </div>
+                  <h3 style="margin-bottom: 0px">{{ booking.username }}</h3>
+                  <h4 style="margin-bottom: 0px">
+                    {{ booking.date | date: "shortDate" }}
+                  </h4>
+                  <h4 style="margin-bottom: 0px">
+                    {{ booking.date | date: "shortTime" }}
+                  </h4>
+                  <button
+                    class="btn btn-outline-success"
+                    (click)="handleBookingStatus(booking.id, 'accepted')"
+                  >
+                    <fa-icon [icon]="faCheck"></fa-icon></button
+                  ><button
+                    class="btn btn-outline-danger"
+                    (click)="handleBookingStatus(booking.id, 'rejected')"
+                  >
+                    <fa-icon [icon]="faTimes"></fa-icon>
+                  </button>
                 </div>
-                <h3 style="margin-bottom: 0px">{{ booking.username }}</h3>
-                <h4 style="margin-bottom: 0px">
-                  {{ booking.date | date: "shortDate" }}
-                </h4>
-                <h4 style="margin-bottom: 0px">
-                  {{ booking.date | date: "shortTime" }}
-                </h4>
-                <button
-                  class="btn btn-outline-success"
-                  (click)="handleBookingStatus(booking.id, 'accepted')"
-                >
-                  <fa-icon [icon]="faCheck"></fa-icon></button
-                ><button
-                  class="btn btn-outline-danger"
-                  (click)="handleBookingStatus(booking.id, 'rejected')"
-                >
-                  <fa-icon [icon]="faTimes"></fa-icon>
-                </button>
               </div>
+            </div>
+            <div
+              *ngIf="!nonAcceptedBooking.length"
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 400px;
+                font-weight: bold;
+              "
+              class="bg-light"
+            >
+              <h1>No Bookings Found</h1>
+              <p>Try again later</p>
             </div>
           </div>
         </div>
