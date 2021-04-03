@@ -20,4 +20,12 @@ export class AppointmentTrainerService {
       ...appointmentTrainer,
     });
   }
+
+  updateReport(appointmentTrainer: AppointmentTrainer, userId: string): any {
+    console.log(appointmentTrainer);
+    return this.http.put<any>(
+      this.baseUrl + `/Trainer/report/${userId}/${this.userDetails.id}`,
+      appointmentTrainer
+    );
+  }
 }

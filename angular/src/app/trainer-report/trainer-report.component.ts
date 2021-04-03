@@ -61,7 +61,15 @@ export class TrainerReportComponent implements OnInit {
 
   onSubmit(): void {
     if (this.isReportUpdate) {
-      console.log('Under Contruction...');
+      this.appointmentTrainerService
+        .updateReport(this.trainerReportForm.value, this.selectedBooking.id)
+        .subscribe((data: any) => {
+          console.log(data);
+          this.snackBar.open(data.message, 'close', {
+            duration: 2000,
+          });
+          this.handleSelectedBooking(this.selectedBooking.id);
+        });
     } else {
       this.appointmentTrainerService
         .addAppointmentTrainer({
