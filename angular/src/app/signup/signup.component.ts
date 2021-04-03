@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
@@ -12,12 +13,18 @@ export class SignupComponent implements OnInit {
 
   submitted = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
+  ) {}
 
   onSubmit(): void {
     this.submitted = true;
     this.authService.signup(this.signupForm.value).subscribe((data: any) => {
-      console.log(data);
+      this.snackBar.open(data.message, 'close', {
+        duration: 2000,
+      });
       if (data.message === 'Signup Successful') {
         this.authService.redirect('login');
       }

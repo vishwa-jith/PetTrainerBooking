@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +34,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
     FontAwesomeModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
   ],
   bootstrap: [AppComponent],
 })

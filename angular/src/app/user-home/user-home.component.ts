@@ -4,7 +4,7 @@ import { TrainersService } from '../services/trainers/trainers.service';
 import { AddBookingService } from '../services/addBooking/add-booking.service';
 import { Trainer } from '../services/trainers/trainers.service.model';
 import { BookingsService } from '../services/bookings/bookings.service';
-import { Booking } from '../services/bookings/booking.service.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-home',
@@ -21,7 +21,8 @@ export class UserHomeComponent implements OnInit {
     private trainerService: TrainersService,
     private fb: FormBuilder,
     private addBookingService: AddBookingService,
-    private bookingsService: BookingsService
+    private bookingsService: BookingsService,
+    private snackBar: MatSnackBar
   ) {
     this.trainers = this.trainerService
       .getTrainers()
@@ -45,6 +46,9 @@ export class UserHomeComponent implements OnInit {
         })
         .subscribe((data: any) => {
           console.log(data);
+          this.snackBar.open(data.message, 'close', {
+            duration: 2000,
+          });
           this.handleTrainer(this.selectedTrainer);
         });
     }

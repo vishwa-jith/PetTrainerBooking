@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +10,21 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: any;
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
+  ) {}
 
   onSubmit(): void {
     this.authService.login(this.loginForm.value).subscribe((data: any) => {
       this.authService.setUserDetails(data);
-      this.authService.redirect('home');
-      location.reload();
+      this.snackBar.open(data.message, 'close', {
+        duration: 2000,
+      });
+      if (data.message === 'Login Successfull') {
+        location.reload();
+      }
     });
   }
 

@@ -3,6 +3,7 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Booking } from '../services/bookings/booking.service.model';
 import { BookingsService } from '../services/bookings/bookings.service';
 import { BookingStatusService } from '../services/bookingStatus/booking-status.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-trainer-home',
@@ -18,7 +19,8 @@ export class TrainerHomeComponent implements OnInit {
 
   constructor(
     private bookingService: BookingsService,
-    private bookingStatusService: BookingStatusService
+    private bookingStatusService: BookingStatusService,
+    private snackBar: MatSnackBar
   ) {
     this.getBookings();
   }
@@ -40,6 +42,9 @@ export class TrainerHomeComponent implements OnInit {
         bookingStatus,
       })
       .subscribe((data: any) => {
+        this.snackBar.open(data.message, 'close', {
+          duration: 2000,
+        });
         console.log(data);
         this.getBookings();
       });

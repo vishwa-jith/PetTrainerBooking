@@ -6,6 +6,7 @@ import { faCalendarWeek, faClock } from '@fortawesome/free-solid-svg-icons';
 import { AppointmentTrainerService } from '../services/appointmentTrainer/appointment-trainer.service';
 import { CheckupReportService } from '../services/checkupReport/checkup-report.service';
 import { Report } from '../services/checkupReport/checkup-report.service.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-trainer-report',
@@ -23,7 +24,8 @@ export class TrainerReportComponent implements OnInit {
     private bookingsService: BookingsService,
     private fb: FormBuilder,
     private appointmentTrainerService: AppointmentTrainerService,
-    private checkupReportService: CheckupReportService
+    private checkupReportService: CheckupReportService,
+    private snackBar: MatSnackBar
   ) {
     this.bookingsService
       .getBookings()
@@ -68,6 +70,9 @@ export class TrainerReportComponent implements OnInit {
         })
         .subscribe((data: any) => {
           console.log(data);
+          this.snackBar.open(data.message, 'close', {
+            duration: 2000,
+          });
           this.handleSelectedBooking(this.selectedBooking.id);
         });
     }
