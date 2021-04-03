@@ -9,17 +9,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.example.Dao.User;
 import com.example.Dao.Message;
+import com.example.Dao.Jwt;
+import com.example.JwtService;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @CrossOrigin()
@@ -27,6 +31,9 @@ public class HomeController {
 
 	@Autowired
 	JdbcTemplate jdbc;
+
+	@Autowired
+	JwtService jwt;
 
 	@GetMapping("/createUser")
 	public String welcome() {
@@ -59,7 +66,7 @@ public class HomeController {
 						return e;
 					}
 				});
-		Message msg=new Message();
+		Message msg = new Message();
 		if (userEmail.getEmail() != null) {
 			msg.setMessage("User already exist with this email");
 		} else if (userUsername.getUsername() != null) {
@@ -75,7 +82,7 @@ public class HomeController {
 	}
 
 	@PostMapping(value = "/login")
-	public User login(@RequestBody User user) {
+	public ResponseEntity<?> login(@RequestBody User user) {
 		User res = jdbc.query(
 				"select id, email, username, mobileNumber, active, role, shopName, experience from user where email='"
 						+ user.getEmail() + "';",
@@ -111,15 +118,26 @@ public class HomeController {
 		if (logUser.getEmail() == null) {
 			res.setMessage("Not such account exist");
 		} else if (logUser.getEmail().equals(user.getEmail()) && logUser.getPassword().equals(user.getPassword())) {
-			res.setMessage("Login Successfull");
+			final String str = jwt.generateToken(logUser);
+			Jwt jwt = new Jwt();
+			jwt.setJwt(str);
+			jwt.setRole(res.getRole());
+			return ResponseEntity.ok(jwt);
 		} else {
 			res.setMessage("Wrong username or password");
 		}
-		return res;
+		return ResponseEntity.ok(res);
 	}
 
 	@GetMapping("/Admin")
-	public List<User> getTrainers() {
+	public ResponseEntity<?> getTrainers(@RequestHeader("Authorization") String authToken) {
+		String token = authToken.substring(7, authToken.length());
+		User authUser = jwt.validateToken(token, "admin");
+		if (authUser.getMessage() != null) {
+			Message msg = new Message();
+			msg.setMessage(authUser.getMessage());
+			return ResponseEntity.ok(msg);
+		}
 		List<User> logUser = jdbc.query("select * from user where role='trainer';",
 				new ResultSetExtractor<List<User>>() {
 					@Override
@@ -139,11 +157,18 @@ public class HomeController {
 						return list;
 					}
 				});
-		return logUser;
+		return ResponseEntity.ok(logUser);
 	}
 
 	@GetMapping("/Trainer")
-	public List<User> getTrainersForTrainer() {
+	public ResponseEntity<?> getTrainersForTrainer(@RequestHeader("Authorization") String authToken) {
+		String token = authToken.substring(7, authToken.length());
+		User authUser = jwt.validateToken(token, "trainer");
+		if (authUser.getMessage() != null) {
+			Message msg = new Message();
+			msg.setMessage(authUser.getMessage());
+			return ResponseEntity.ok(msg);
+		}
 		List<User> logUser = jdbc.query("select * from user where role='trainer';",
 				new ResultSetExtractor<List<User>>() {
 					@Override
@@ -161,11 +186,18 @@ public class HomeController {
 						return list;
 					}
 				});
-		return logUser;
+		return ResponseEntity.ok(logUser);
 	}
 
 	@PostMapping("/Admin/add")
-	public Message addTrainer(@RequestBody User user) {
+	public ResponseEntity<?> addTrainer(@RequestHeader("Authorization") String authToken, @RequestBody User user) {
+		String token = authToken.substring(7, authToken.length());
+		User authUser = jwt.validateToken(token, "admin");
+		if (authUser.getMessage() != null) {
+			Message msg = new Message();
+			msg.setMessage(authUser.getMessage());
+			return ResponseEntity.ok(msg);
+		}
 		User userEmail = jdbc.query("select * from user where email='" + user.getEmail() + "';",
 				new ResultSetExtractor<User>() {
 					@Override
@@ -202,21 +234,36 @@ public class HomeController {
 			jdbc.update(query);
 			msg.setMessage("Trainer Added Successfully");
 		}
-		return msg;
+		return ResponseEntity.ok(msg);
 	}
 
 	@DeleteMapping(value = "/Admin/remove/{id}")
-	public Message removeTrainer(@PathVariable("id") String id) {
+	public ResponseEntity<?> removeTrainer(@RequestHeader("Authorization") String authToken,
+			@PathVariable("id") String id) {
+		String token = authToken.substring(7, authToken.length());
+		User authUser = jwt.validateToken(token, "admin");
+		if (authUser.getMessage() != null) {
+			Message msg = new Message();
+			msg.setMessage(authUser.getMessage());
+			return ResponseEntity.ok(msg);
+		}
 		String query = "delete from user where id='" + id + "';";
 		jdbc.update(query);
 		Message msg = new Message();
 		msg.setMessage("Trainer removed Successfully");
-		return msg;
+		return ResponseEntity.ok(msg);
 	}
 
 	@PutMapping(value = "/Admin/update/{id}")
-	public Message updateTrainer(@PathVariable("id") String id, @RequestBody User user) {
-
+	public ResponseEntity<?> updateTrainer(@RequestHeader("Authorization") String authToken, @PathVariable("id") String id,
+			@RequestBody User user) {
+		String token = authToken.substring(7, authToken.length());
+		User authUser = jwt.validateToken(token, "admin");
+		if (authUser.getMessage() != null) {
+			Message msg = new Message();
+			msg.setMessage(authUser.getMessage());
+			return ResponseEntity.ok(msg);
+		}
 		User logUserDetails = jdbc.query("select * from user where id='" + id + "';", new ResultSetExtractor<User>() {
 			@Override
 			public User extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -244,6 +291,6 @@ public class HomeController {
 		jdbc.update(query);
 		Message msg = new Message();
 		msg.setMessage("Trainer Details Updated Successfully");
-		return msg;
+		return ResponseEntity.ok(msg);
 	}
 }

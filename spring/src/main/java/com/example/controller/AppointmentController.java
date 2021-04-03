@@ -7,9 +7,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import com.example.JwtService;
+import com.example.Dao.Message;
+import com.example.Dao.User;
 
 import java.util.List;
 import java.sql.ResultSet;
@@ -23,6 +29,9 @@ public class AppointmentController {
 	@Autowired
 	JdbcTemplate jdbc;
 
+	@Autowired
+	JwtService jwt;
+
 	@GetMapping("/createAppointment")
 	public String welcomeAppointment() {
 		String sql = "CREATE TABLE appointment (id VARCHAR(40), userId VARCHAR(40), date TIMESTAMP, issuedBy VARCHAR(40), PRIMARY KEY (id, userId),  CONSTRAINT FK_AppointmentUserOrder FOREIGN KEY (userId) REFERENCES booking(id))";
@@ -30,9 +39,16 @@ public class AppointmentController {
 		return "Welcome Appointment";
 	}
 
-	@GetMapping("/Appointment/{userId}")
-	public List<Appointment> getAppointments(@PathVariable("userId") String userId) {
-		List<Appointment> appointment = jdbc.query("select * from appointment where userId='" + userId + "';",
+	@GetMapping("/Appointment")
+	public ResponseEntity<?> getAppointments(@RequestHeader("Authorization") String authToken) {
+		String token = authToken.substring(7, authToken.length());
+		User authUser = jwt.validateToken(token, "owner");
+		if (authUser.getMessage() != null) {
+			Message msg = new Message();
+			msg.setMessage(authUser.getMessage());
+			return ResponseEntity.ok(msg);
+		}
+		List<Appointment> appointment = jdbc.query("select * from appointment where userId='" + authUser.getId() + "';",
 				new ResultSetExtractor<List<Appointment>>() {
 					@Override
 					public List<Appointment> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -47,18 +63,17 @@ public class AppointmentController {
 						return list;
 					}
 				});
-		return appointment;
+		return ResponseEntity.ok(appointment);
 	}
 
 	@GetMapping("/Appointment/{userId}/{id}")
-	public Appointment getAppointmentWithId(@PathVariable("userId") String userId,
-			@PathVariable("id") String id) {
+	public Appointment getAppointmentWithId(@PathVariable("userId") String userId, @PathVariable("id") String id) {
 		Appointment appointment = jdbc.query(
 				"select * from appointment where userId='" + userId + "'AND id='" + id + "';",
 				new ResultSetExtractor<Appointment>() {
 					@Override
 					public Appointment extractData(ResultSet rs) throws SQLException, DataAccessException {
-						
+
 						Appointment e = new Appointment();
 						while (rs.next()) {
 							e.setId(rs.getString(1));
