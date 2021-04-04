@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { TrainersService } from '../services/trainers/trainers.service';
 import { TrainerForAdmin } from '../services/trainers/trainers.service.model';
@@ -87,5 +87,18 @@ export class AdminHomeComponent implements OnInit {
     this.newTrainerForm = this.initialForm;
   }
 
-  ngOnInit(): void {}
+  get f() {
+    return this.newTrainerForm.controls;
+  }
+  ngOnInit() {
+    this.newTrainerForm = this.fb.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        experience: ['', Validators.required],
+        shopName: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+      }
+    );
+  }
 }

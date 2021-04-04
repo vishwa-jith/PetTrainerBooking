@@ -60,7 +60,17 @@
                 placeholder="Enter name"
                 class="form-control"
                 formControlName="username"
-              />
+                [ngClass]="{
+                  'is-invalid': f.username.touched && f.username.errors }"/>
+                <div *ngIf="f.username.touched && f.username.errors"
+                class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">
+                  Username is required
+                </div>
+                <div *ngIf="f.username.errors.minlength">
+                  Username must be atleast 3 characters
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-row d-flex justify-content-center">
@@ -70,7 +80,15 @@
                 placeholder="Enter email"
                 class="form-control"
                 formControlName="email"
+                name="email"
+                [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }"
               />
+              <div
+                *ngIf="f.email.touched && f.email.errors"
+                class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+                <div *ngIf="f.email.errors.email">Email must be valid</div>
+              </div>
             </div>
           </div>
           <div class="form-row d-flex justify-content-center">
@@ -81,7 +99,14 @@
                 name="experience"
                 class="form-control"
                 formControlName="experience"
+                [ngClass]="{
+                  'is-invalid': f.experience.touched && f.experience.errors }"
               />
+              <div
+                *ngIf="f.experience.touched && f.experience.errors"
+                class="invalid-feedback">
+              <div *ngIf="f.experience.errors.required">Experience is required </div>
+              </div>
             </div>
           </div>
           <div class="form-row d-flex justify-content-center">
@@ -92,8 +117,17 @@
                 class="form-control"
                 formControlName="shopName"
                 name="shopName"
+                [ngClass]="{
+                  'is-invalid': f.shopName.touched && f.shopName.errors }"
               />
+              <div *ngIf="f.shopName.touched && f.shopName.errors"
+                class="invalid-feedback">
+                <div *ngIf="f.shopName.errors.required">
+                  Shop name is required
+                </div>
+              </div>
             </div>
+            
           </div>
           <div class="form-row d-flex justify-content-center">
             <div class="col-lg-10 my-2">
@@ -102,7 +136,19 @@
                 placeholder="Enter password"
                 class="form-control"
                 formControlName="password"
+                [ngClass]="{
+                  'is-invalid': f.password.touched && f.password.errors
+                }"
               />
+              <div
+                *ngIf="f.password.touched && f.password.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.password.errors.required">
+                  Password is required
+                </div>
+                <div *ngIf="f.password.errors.minlength">Password must be atleast 6 characters</div>
+              </div>
             </div>
           </div>
         </form>
