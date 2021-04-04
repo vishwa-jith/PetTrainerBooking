@@ -37,8 +37,9 @@ public class HomeController {
 
 	@GetMapping("/createUser")
 	public String welcome() {
-		String sql = "CREATE TABLE user (id VARCHAR(40) NOT NULL PRIMARY KEY, email VARCHAR(30) NOT NULL UNIQUE, password VARCHAR(30) NOT NULL, username VARCHAR(50) NOT NULL UNIQUE, mobileNumber VARCHAR(11), active BOOLEAN DEFAULT true, role VARCHAR(20) NOT NULL DEFAULT 'owner', shopName VARCHAR(40), experience INT(2))";
+		String sql = "CREATE TABLE user (id VARCHAR(40) NOT NULL PRIMARY KEY, email VARCHAR(30) NOT NULL UNIQUE, password VARCHAR(30) NOT NULL, username VARCHAR(50) NOT NULL UNIQUE, mobileNumber VARCHAR(11), active BOOLEAN DEFAULT true, role VARCHAR(20) NOT NULL DEFAULT 'owner', shopName VARCHAR(40), experience INT(2), profileUrl VARCHAR(300))";
 		jdbc.execute(sql);
+		jdbc.update( "insert into user (id, username, email, password, role) values ('c8f4a036-1809-4207-aa6e-638e5ab326df','admin','admin@gmail.com','password','admin')");
 		jdbc.update( "insert into user (id, username, email, password, mobileNumber) values ('79617a02-dc5d-4a6c-a39f-9f12fe0ee6c3','Kishore Kumar','kishore1432@gmail.com','password','9876543210')");
 		jdbc.update( "insert into user (id, username, email, password, mobileNumber) values ('988de637-4112-4958-8e46-531428250d84','Vishwa','vishwas32@gmail.com','password','9876543210')");
 		jdbc.update( "insert into user (id, username, email, password, mobileNumber) values ('2e92f6e2-839a-4e56-b76f-cd32433a8b56','Vishwajith V','vishwasth567@gmail.com','password','9876543210')");
