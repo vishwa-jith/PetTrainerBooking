@@ -11,6 +11,7 @@ public class User {
     private String shopName;
     private int experience;
     private String message;
+    private String profileUrl;
 
     public String getId() {
         return id;
@@ -91,11 +92,20 @@ public class User {
     public void setMessage(String message) {
         this.message = message;
     }
+    
     @Override
     public String toString() {
         return "User [active=" + active + ", email=" + email + ", experience=" + experience + ", id=" + id
                 + ", message=" + message + ", mobileNumber=" + mobileNumber + ", password=" + password + ", role="
                 + role + ", shopName=" + shopName + ", username=" + username + "]";
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
  
 }
