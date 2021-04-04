@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { TrainersService } from '../services/trainers/trainers.service';
 import { TrainerForAdmin } from '../services/trainers/trainers.service.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-home',
@@ -20,11 +21,13 @@ export class AdminHomeComponent implements OnInit {
     experience: [''],
     shopName: [''],
     password: [''],
+    profileUrl: [''],
   });
 
   constructor(
     private trainerService: TrainersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.getTrainers();
   }
@@ -49,6 +52,9 @@ export class AdminHomeComponent implements OnInit {
           this.selectedTrainer = null;
           this.newTrainerForm = this.initialForm;
           this.getTrainers();
+          this.snackBar.open(data.message, 'close', {
+            duration: 2000,
+          });
           console.log(data);
         });
     } else {
@@ -57,6 +63,9 @@ export class AdminHomeComponent implements OnInit {
         .subscribe((data: any) => {
           console.log(data);
           this.newTrainerForm = this.initialForm;
+          this.snackBar.open(data.message, 'close', {
+            duration: 2000,
+          });
           this.getTrainers();
         });
     }
@@ -70,6 +79,7 @@ export class AdminHomeComponent implements OnInit {
       experience: [trainer.experience],
       shopName: [trainer.shopName],
       password: [trainer.password],
+      profileUrl: [trainer.profileUrl],
     });
   }
 
@@ -79,6 +89,9 @@ export class AdminHomeComponent implements OnInit {
       this.selectedTrainer = null;
       this.newTrainerForm = this.initialForm;
       this.getTrainers();
+      this.snackBar.open(data.message, 'close', {
+        duration: 2000,
+      });
     });
   }
 

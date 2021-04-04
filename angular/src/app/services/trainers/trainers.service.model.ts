@@ -10,5 +10,6 @@ export interface TrainerForAdmin {
   username: string;
   password: string;
   shopName: string;
-  experience: 8;
+  experience: string;
+  profileUrl: string;
 }

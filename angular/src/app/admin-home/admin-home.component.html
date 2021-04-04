@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="padding-bottom: 50px">
   <!--Display search bar-->
   <div class="jumbotron">
     <div class="Page header">
@@ -149,6 +149,16 @@
                 </div>
                 <div *ngIf="f.password.errors.minlength">Password must be atleast 6 characters</div>
               </div>
+            </div>
+          </div>
+          <div class="form-row d-flex justify-content-center">
+            <div class="col-lg-10 my-2">
+              <input
+                type="text"
+                placeholder="Enter profile Image Url"
+                class="form-control"
+                formControlName="profileUrl"
+              />
             </div>
           </div>
         </form>
