@@ -37,8 +37,22 @@ public class HomeController {
 
 	@GetMapping("/createUser")
 	public String welcome() {
-		String sql = "CREATE TABLE user (id VARCHAR(40) NOT NULL PRIMARY KEY, email VARCHAR(30) NOT NULL UNIQUE, password VARCHAR(30) NOT NULL, username VARCHAR(50) NOT NULL UNIQUE, mobileNumber VARCHAR(11), active BOOLEAN DEFAULT true, role VARCHAR(20) NOT NULL DEFAULT 'owner', shopName VARCHAR(20), experience INT(2))";
+		String sql = "CREATE TABLE user (id VARCHAR(40) NOT NULL PRIMARY KEY, email VARCHAR(30) NOT NULL UNIQUE, password VARCHAR(30) NOT NULL, username VARCHAR(50) NOT NULL UNIQUE, mobileNumber VARCHAR(11), active BOOLEAN DEFAULT true, role VARCHAR(20) NOT NULL DEFAULT 'owner', shopName VARCHAR(40), experience INT(2))";
 		jdbc.execute(sql);
+		jdbc.update( "insert into user (id, username, email, password, mobileNumber) values ('79617a02-dc5d-4a6c-a39f-9f12fe0ee6c3','Kishore Kumar','kishore1432@gmail.com','password','9876543210')");
+		jdbc.update( "insert into user (id, username, email, password, mobileNumber) values ('988de637-4112-4958-8e46-531428250d84','Vishwa','vishwas32@gmail.com','password','9876543210')");
+		jdbc.update( "insert into user (id, username, email, password, mobileNumber) values ('2e92f6e2-839a-4e56-b76f-cd32433a8b56','Vishwajith V','vishwasth567@gmail.com','password','9876543210')");
+		jdbc.update( "insert into user (id, username, email, password, mobileNumber) values ('dda5654c-5319-4f2f-b2d8-1cb949b84106','Vishwajith','vishwajith@gmail.com','password','9876543210')");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('2f36e751-d162-47ee-870b-667a7bd8a8f7','Madhan Raj','madRaj999@gmail.com','password','trainer','Madhan Raj Pet Store',10)");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('e3a4e274-d2af-41af-a351-c4ca7e46fc1d','Ajay krishna','ajaya22@gmail.com','password','trainer','Ajay krishna Pet Center',8)");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('3448e12d-5a50-4df6-9f4b-e9c876c0d894','Balaji D','balaji345@gmail.com','password','trainer','Balaji Pet Center',2)");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('484d7f14-e684-44b6-9c1f-35730b817b11','Sakthi Siva','sivas222@gmail.com','password','trainer','Sakthi Siva Pet care',7)");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('bf6ae6a9-0447-40d1-af20-4552ab9f9670','Saravanan S','sarass1234@gmail.com','password','trainer','Saravanan Trainer center',7)");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('5d39d1fa-45d9-4ab9-a657-6e1a24cd6546','Ashwin S','aswindineshd112@gmail.com','password','trainer','Ashwin S Pet care',5)");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('d031a0e5-dc10-4e1b-8856-f589b0f0d1ad','Lokesh R','lokiloki123@gmail.com','password','trainer','Lokesh R dog care',2)");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('210e4967-b2c9-489e-8618-a1b4aa9a2f01','Venkatesh D','venky27@gmail.com','password','trainer','Venky Pet care',7)");
+		jdbc.update( "insert into user(id, username, email, password, role, shopName, experience) values ('916276aa-cfda-4c63-9d8d-3c0f729fdcd8','Dinesh D','dineshd2@gmail.com','password','trainer','Dinesh Pet Center',8)");
+		
 		return "Welcome";
 	}
 
@@ -163,7 +177,7 @@ public class HomeController {
 	@GetMapping("/Trainer")
 	public ResponseEntity<?> getTrainersForTrainer(@RequestHeader("Authorization") String authToken) {
 		String token = authToken.substring(7, authToken.length());
-		User authUser = jwt.validateToken(token, "trainer");
+		User authUser = jwt.validateToken(token, "owner");
 		if (authUser.getMessage() != null) {
 			Message msg = new Message();
 			msg.setMessage(authUser.getMessage());
@@ -255,8 +269,9 @@ public class HomeController {
 	}
 
 	@PutMapping(value = "/Admin/update/{id}")
-	public ResponseEntity<?> updateTrainer(@RequestHeader("Authorization") String authToken, @PathVariable("id") String id,
-			@RequestBody User user) {
+
+	public ResponseEntity<?> updateTrainer(@RequestHeader("Authorization") String authToken,
+			@PathVariable("id") String id, @RequestBody User user) {
 		String token = authToken.substring(7, authToken.length());
 		User authUser = jwt.validateToken(token, "admin");
 		if (authUser.getMessage() != null) {
