@@ -18,8 +18,7 @@ export class BookingsService {
     }),
   };
 
-  baseUrl =
-    'https://8080-bafeaefeddfbbbacedbefccaeeabbfbebdcacd.examlyiopb.examly.io';
+  baseUrl = this.authService.getBaseUrl();
 
   getBookings(): any {
     return this.http.get<Booking[]>(

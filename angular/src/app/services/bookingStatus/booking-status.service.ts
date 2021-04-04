@@ -8,8 +8,8 @@ import { AuthService } from '../auth/auth.service';
 export class BookingStatusService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  baseUrl =
-    'https://8080-bafeaefeddfbbbacedbefccaeeabbfbebdcacd.examlyiopb.examly.io';
+  baseUrl = this.authService.getBaseUrl();
+
   userDetails = JSON.parse(this.authService.getuserDetails());
 
   httpOptions = {

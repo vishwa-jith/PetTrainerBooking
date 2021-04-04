@@ -20,7 +20,9 @@ export class AuthService {
   setUserDetails = (userDetails: any) => {
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
   };
-
+  getBaseUrl = () => {
+    return this.baseUrl;
+  };
   redirect(path: string): void {
     const userDetails = JSON.parse(this.getuserDetails());
     if (userDetails) {
