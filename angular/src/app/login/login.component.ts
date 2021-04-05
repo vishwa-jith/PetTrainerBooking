@@ -36,11 +36,9 @@ export class LoginComponent implements OnInit {
     this.authService
       .sendOtp(this.loginForm.value.email)
       .subscribe((data: any) => {
-        if (data.message === 'Otp successfully sent') {
-          this.snackBar.open(data.message, 'close', {
-            duration: 2000,
-          });
-        }
+        this.snackBar.open(data.message, 'close', {
+          duration: 2000,
+        });
       });
   }
 
