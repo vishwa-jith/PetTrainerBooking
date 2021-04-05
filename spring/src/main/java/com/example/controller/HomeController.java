@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import com.example.Dao.User;
 import com.example.Dao.Message;
@@ -35,9 +37,12 @@ public class HomeController {
 	@Autowired
 	JwtService jwt;
 
+	@Autowired
+	private JavaMailSender javaMailSender;
+
 	@GetMapping("/createUser")
 	public String welcome() {
-		String sql = "CREATE TABLE user (id VARCHAR(40) NOT NULL PRIMARY KEY, email VARCHAR(30) NOT NULL UNIQUE, password VARCHAR(30) NOT NULL, username VARCHAR(50) NOT NULL UNIQUE, mobileNumber VARCHAR(11), active BOOLEAN DEFAULT true, role VARCHAR(20) NOT NULL DEFAULT 'owner', shopName VARCHAR(40), experience INT(2), profileUrl VARCHAR(300))";
+		String sql = "CREATE TABLE user (id VARCHAR(40) NOT NULL PRIMARY KEY, email VARCHAR(30) NOT NULL UNIQUE, password VARCHAR(30) NOT NULL, username VARCHAR(50) NOT NULL UNIQUE, mobileNumber VARCHAR(11), active BOOLEAN DEFAULT true, role VARCHAR(20) NOT NULL DEFAULT 'owner', shopName VARCHAR(40), experience INT(2), profileUrl VARCHAR(300), otp INT)";
 		jdbc.execute(sql);
 		jdbc.update(
 				"insert into user (id, username, email, password, role) values ('c8f4a036-1809-4207-aa6e-638e5ab326df','admin','admin@gmail.com','password','admin')");
@@ -110,10 +115,32 @@ public class HomeController {
 		return msg;
 	}
 
+	@PostMapping(value = "/otp")
+	public Message sendOtp(@RequestBody User user) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(user.getEmail());
+
+		int otp = (int) (Math.random() * (999999 - 100000 + 1) + 100000);
+		message.setSubject("Login Two Factor Authentication otp");
+		message.setText(String.valueOf(otp));
+
+		javaMailSender.send(message);
+
+		String query = "update user set otp='" + otp + "'  where email='" + user.getEmail() + "';";
+
+		Message msg = new Message();
+		if (jdbc.update(query) == 0) {
+			msg.setMessage("Not such account exist");
+		} else {
+			msg.setMessage("Otp successfully sent");
+		}
+		return msg;
+	}
+
 	@PostMapping(value = "/login")
 	public ResponseEntity<?> login(@RequestBody User user) {
 		User res = jdbc.query(
-				"select id, email, username, mobileNumber, active, role, shopName, experience from user where email='"
+				"select id, email, username, mobileNumber, active, role, shopName, experience, otp from user where email='"
 						+ user.getEmail() + "';",
 				new ResultSetExtractor<User>() {
 					@Override
@@ -128,6 +155,7 @@ public class HomeController {
 							e.setRole(rs.getString(6));
 							e.setShopName(rs.getString(7));
 							e.setExperience(rs.getInt(8));
+							e.setOtp(rs.getInt(9));
 						}
 						return e;
 					}
@@ -144,18 +172,23 @@ public class HomeController {
 						return e;
 					}
 				});
+		Message msg = new Message();
 		if (logUser.getEmail() == null) {
-			res.setMessage("Not such account exist");
-		} else if (logUser.getEmail().equals(user.getEmail()) && logUser.getPassword().equals(user.getPassword())) {
+			msg.setMessage("Not such account exist");
+		} else if (logUser.getEmail().equals(user.getEmail()) && logUser.getPassword().equals(user.getPassword())
+				&& res.getOtp() == user.getOtp()) {
 			final String str = jwt.generateToken(logUser);
 			Jwt jwt = new Jwt();
 			jwt.setJwt(str);
 			jwt.setRole(res.getRole());
 			return ResponseEntity.ok(jwt);
+		} else if (res.getOtp() != user.getOtp()) {
+			msg.setMessage("Invalid Otp");
+
 		} else {
-			res.setMessage("Wrong username or password");
+			msg.setMessage("Wrong username or password");
 		}
-		return ResponseEntity.ok(res);
+		return ResponseEntity.ok(msg);
 	}
 
 	@GetMapping("/Admin")

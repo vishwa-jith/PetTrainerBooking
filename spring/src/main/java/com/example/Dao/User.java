@@ -12,6 +12,7 @@ public class User {
     private int experience;
     private String message;
     private String profileUrl;
+    private int otp;
 
     public String getId() {
         return id;
@@ -93,19 +94,28 @@ public class User {
         this.message = message;
     }
     
-    @Override
-    public String toString() {
-        return "User [active=" + active + ", email=" + email + ", experience=" + experience + ", id=" + id
-                + ", message=" + message + ", mobileNumber=" + mobileNumber + ", password=" + password + ", role="
-                + role + ", shopName=" + shopName + ", username=" + username + "]";
-    }
-
     public String getProfileUrl() {
         return profileUrl;
     }
 
     public void setProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
+    }
+
+    public int getOtp() {
+        return otp;
+    }
+
+    public void setOtp(int otp) {
+        this.otp = otp;
+    }
+
+    @Override
+    public String toString() {
+        return "User [active=" + active + ", email=" + email + ", experience=" + experience + ", id=" + id
+                + ", message=" + message + ", mobileNumber=" + mobileNumber + ", otp=" + otp + ", password=" + password
+                + ", profileUrl=" + profileUrl + ", role=" + role + ", shopName=" + shopName + ", username=" + username
+                + "]";
     }
  
 }
