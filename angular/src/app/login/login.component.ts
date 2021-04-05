@@ -32,6 +32,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  handleSendOtp() {
+    this.authService
+      .sendOtp(this.loginForm.value.email)
+      .subscribe((data: any) => {
+        this.snackBar.open(data.message, 'close', {
+          duration: 2000,
+        });
+      });
+  }
+
   get f() {
     return this.loginForm.controls;
   }
@@ -39,6 +49,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
+      otp: ['', Validators.required],
     });
   }
 }

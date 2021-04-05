@@ -73,6 +73,7 @@ export class AdminHomeComponent implements OnInit {
 
   handleSelectedTrainer(trainer: TrainerForAdmin): void {
     this.selectedTrainer = trainer;
+    console.log(trainer.profileUrl);
     this.newTrainerForm = this.fb.group({
       username: [trainer.username],
       email: [trainer.email],
@@ -104,14 +105,13 @@ export class AdminHomeComponent implements OnInit {
     return this.newTrainerForm.controls;
   }
   ngOnInit() {
-    this.newTrainerForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        username: ['', [Validators.required, Validators.minLength(3)]],
-        experience: ['', Validators.required],
-        shopName: ['', Validators.required],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-      }
-    );
+    this.initialForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      experience: ['', Validators.required],
+      shopName: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      profileUrl: [''],
+    });
   }
 }

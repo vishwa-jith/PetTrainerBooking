@@ -107,7 +107,7 @@ public class ReportController {
                 + "'  where id='" + id + "' AND appointmentId='" + authUser.getId() + "'";
         jdbc.update(query);
         Message msg = new Message();
-        msg.setMessage("Booking updated successfully");
+        msg.setMessage("Report updated successfully");
         return ResponseEntity.ok(msg);
     }
 
