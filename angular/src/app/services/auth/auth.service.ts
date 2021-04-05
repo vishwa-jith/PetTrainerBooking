@@ -51,6 +51,10 @@ export class AuthService {
     this.router.navigate([path]);
   }
 
+  sendOtp(email: string): any {
+    return this.http.post<any>(this.baseUrl + `/otp`, { email });
+  }
+
   login(loginDetails: Login): any {
     return this.http.post<any>(this.baseUrl + `/login`, loginDetails);
   }

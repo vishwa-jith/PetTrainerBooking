@@ -6,7 +6,7 @@
   margin: auto;
 }
 
-.btn {
+.btnn {
   border: none;
   outline: none;
   height: 50px;
@@ -16,7 +16,7 @@
   border-radius: 4px;
   font-weight: bold;
 }
-.btn:hover {
+.btnn:hover {
   background: #fff;
   border: 1px solid;
   color: #000;
